@@ -38,5 +38,16 @@
                          sequenceName="seq_usuario"
                          startValue="1"/>
     </changeSet>
+
+    <changeSet id="20210428190000-004" author="arthurpbelato">
+        <addColumn tableName="tb_usuario">
+            <column name="nome"
+                    type="varchar(11)"
+                    afterColumn="id">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 
