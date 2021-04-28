@@ -1,0 +1,60 @@
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="20210428190000-001" author="arthurpbelato">
+        <createTable tableName="tb_usuario">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="20210428190000-002" author="arthurpbelato">
+        <addColumn tableName="tb_usuario">
+            <column name="cpf" 
+                    type="varchar(11)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email"
+                    type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="dt_nascimento"
+                    type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token"
+                    type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
+    <changeSet  author="arthurpbelato"  id="20210428190000-003">
+        <createSequence  incrementBy="1"
+                         sequenceName="seq_usuario"
+                         startValue="1"/>
+    </changeSet>
+
+    <changeSet id="20210428190000-004" author="arthurpbelato">
+        <addColumn tableName="tb_usuario">
+            <column name="nome"
+                    type="varchar(11)"
+                    afterColumn="id">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
+    <changeSet  author="arthurpbelato"  id="20210428190000-005">
+        <modifyDataType
+                         columnName="nome"
+                         newDataType="varchar(80)"
+                         tableName="tb_usuario"/>
+    </changeSet>
+</databaseChangeLog>
+
