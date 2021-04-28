@@ -49,5 +49,12 @@
 
         </addColumn>
     </changeSet>
+
+    <changeSet  author="arthurpbelato"  id="20210428190000-005">
+        <modifyDataType
+                         columnName="nome"
+                         newDataType="varchar(80)"
+                         tableName="tb_usuario"/>
+    </changeSet>
 </databaseChangeLog>
 
