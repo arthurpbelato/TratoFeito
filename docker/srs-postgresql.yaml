@@ -1,0 +1,9 @@
+version: '2'
+services:
+  srs-postgresql:
+    image: postgres:11.5
+    environment:
+      - POSTGRES_USER=tratofeito
+      - POSTGRES_PASSWORD=tratofeito
+    ports:
+      - 5432:5432

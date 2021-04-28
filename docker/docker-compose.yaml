@@ -1,0 +1,20 @@
+version: '2'
+services:
+  srs-postgresql:
+    extends:
+      file: srs-postgresql.yaml
+      service: srs-postgresql
+    container_name: srs-postgresql
+
+  rabbitmq:
+    extends:
+      file: rabbitmq.yaml
+      service: rabbitmq
+    container_name: rabbitmq
+
+  elasticsearch:
+    extends:
+      file: elasticsearch.yaml
+      service: elasticsearch
+    container_name: elasticsearch
+    

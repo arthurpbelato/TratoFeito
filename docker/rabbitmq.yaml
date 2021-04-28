@@ -1,0 +1,11 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 15671:15671
+      - 15672:15672
+      - 25672:25672
+      - 4369:4369
+      - 5671:5671
+      - 5672:5672
