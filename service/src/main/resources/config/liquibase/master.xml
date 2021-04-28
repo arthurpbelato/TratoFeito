@@ -5,4 +5,8 @@
 
     <include file="config/liquibase/changelogs/20210428190000_criar_tb_usuario.xml"
              relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428201500_criar_tb_categoria.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428203000_criar_tb_situacao.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>
