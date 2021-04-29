@@ -41,4 +41,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet author="nicholas"  id="20210428202200-002">
+        <createSequence  incrementBy="1"
+                         sequenceName="seq_item"
+                         startValue="1"/>
+    </changeSet>
+
 </databaseChangeLog>
