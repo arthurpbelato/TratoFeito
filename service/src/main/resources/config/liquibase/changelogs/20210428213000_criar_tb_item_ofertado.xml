@@ -28,5 +28,19 @@
                                  referencedColumnNames="id"
                                  referencedTableName="tb_item"/>
     </changeSet>
+
+    <changeSet author="arthurpbelato" id="20210428213000-002">
+        <setColumnRemarks
+    columnName="id_oferta"
+    remarks="referencia a oferta a qual o item pertence"
+    tableName="tb_item_ofertado"/>
+    </changeSet>
+
+    <changeSet author="arthurpbelato" id="20210428213000-003">
+        <setColumnRemarks
+                columnName="id_item_ofertado"
+                remarks="referencia o item ofertado para troca"
+                tableName="tb_item_ofertado"/>
+    </changeSet>
 </databaseChangeLog>
 

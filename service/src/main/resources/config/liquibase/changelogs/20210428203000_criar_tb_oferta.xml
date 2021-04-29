@@ -30,5 +30,26 @@
                          sequenceName="seq_oferta"
                          startValue="1"/>
     </changeSet>
+
+    <changeSet author="arthurpbelato" id="20210428203000-003">
+        <setColumnRemarks
+                columnName="id_item"
+                remarks="referencia o item desejado na oferta"
+                tableName="tb_oferta"/>
+    </changeSet>
+
+    <changeSet author="arthurpbelato" id="20210428203000-004">
+        <setColumnRemarks
+                columnName="id_usuario_oferta"
+                remarks="referencia o usuario que está realizando a oferta"
+                tableName="tb_oferta"/>
+    </changeSet>
+
+    <changeSet author="arthurpbelato" id="20210428203000-005">
+        <setColumnRemarks
+                columnName="id_situacao"
+                remarks="referencia a situacao da oferta"
+                tableName="tb_oferta"/>
+    </changeSet>
 </databaseChangeLog>
 
