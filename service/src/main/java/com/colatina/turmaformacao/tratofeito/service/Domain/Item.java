@@ -29,7 +29,7 @@ public class Item implements Serializable {
     private byte[] foto;
 
     @Column(name = "disponibilidade")
-    private String disponibilidade;
+    private Boolean disponibilidade;
 
     @Column(name = "situacao")
     private String situacao;
