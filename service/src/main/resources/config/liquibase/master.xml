@@ -2,4 +2,13 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="config/liquibase/changelogs/20210428190000_criar_tb_usuario.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428201500_criar_tb_categoria.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428203000_criar_tb_situacao.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428202200_criar_tb_item.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>
