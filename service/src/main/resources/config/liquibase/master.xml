@@ -9,4 +9,6 @@
              relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelogs/20210428203000_criar_tb_situacao.xml"
              relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelogs/20210428202200_criar_tb_item.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>

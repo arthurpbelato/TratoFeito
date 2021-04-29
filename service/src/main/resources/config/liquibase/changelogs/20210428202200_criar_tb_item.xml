@@ -20,44 +20,25 @@
                     type="blob">
                 <constraints nullable="false"/>
             </column>
-            <addForeignKeyConstraint  baseColumnNames="id_categoria"
-                                      baseTableName="tb_item"
-                                      constraintName="fk_tb_item_person"
-                                      deferrable="true"
-                                      initiallyDeferred="true"
-                                      onDelete="CASCADE"
-                                      onUpdate="RESTRICT"
-                                      referencedColumnNames="id"
-                                      referencedTableName="tb_categoria"
-                                      validate="true"/>
-
+            <column name="disponibilidade"
+                    type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="id_categoria" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_id_categoria"
+                             references="tb_categoria(id)"/>
+            </column>
+            <column name="id_usuario" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_id_usuario"
+                             references="tb_usuario(id)"/>
+            </column>
+            <column name="situacao"
+                    type="varchar(80)">
                 <constraints nullable="false"/>
             </column>
-
         </createTable>
-    </changeSet>
-
-    <changeSet id="20210428190000-002" author="arthurpbelato">
-        <addColumn tableName="tb_usuario">
-            <column name="cpf"
-                    type="varchar(11)">
-                <constraints unique="true" nullable="false"/>
-            </column>
-            <column name="email"
-                    type="varchar(100)">
-                <constraints unique="true" nullable="false"/>
-            </column>
-            <column name="dt_nascimento"
-                    type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="token"
-                    type="varchar(100)">
-                <constraints unique="true" nullable="false"/>
-            </column>
-
-        </addColumn>
     </changeSet>
 
 </databaseChangeLog>
