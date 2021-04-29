@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20210428202200-001" author="nicholas">
+        <createTable tableName="tb_item">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome"
+                    type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao"
+                    type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="foto"
+                    type="blob">
+                <constraints nullable="false"/>
+            </column>
+            <column name="disponibilidade"
+                    type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_categoria" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_id_categoria"
+                             references="tb_categoria(id)"/>
+            </column>
+            <column name="id_usuario" type="int">
+                <constraints nullable="false"
+                             foreignKeyName="fk_id_usuario"
+                             references="tb_usuario(id)"/>
+            </column>
+            <column name="situacao"
+                    type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="nicholas"  id="20210428202200-002">
+        <createSequence  incrementBy="1"
+                         sequenceName="seq_item"
+                         startValue="1"/>
+    </changeSet>
+
+</databaseChangeLog>
