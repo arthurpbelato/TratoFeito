@@ -1,0 +1,63 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20210428202200-001" author="nicholas">
+        <createTable tableName="tb_item">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome"
+                    type="varchar(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao"
+                    type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="foto"
+                    type="blob">
+                <constraints nullable="false"/>
+            </column>
+            <addForeignKeyConstraint  baseColumnNames="id_categoria"
+                                      baseTableName="tb_item"
+                                      constraintName="fk_tb_item_person"
+                                      deferrable="true"
+                                      initiallyDeferred="true"
+                                      onDelete="CASCADE"
+                                      onUpdate="RESTRICT"
+                                      referencedColumnNames="id"
+                                      referencedTableName="tb_categoria"
+                                      validate="true"/>
+
+            <column name="id_categoria" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210428190000-002" author="arthurpbelato">
+        <addColumn tableName="tb_usuario">
+            <column name="cpf"
+                    type="varchar(11)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email"
+                    type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="dt_nascimento"
+                    type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token"
+                    type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
