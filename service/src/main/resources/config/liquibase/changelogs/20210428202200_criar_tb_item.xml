@@ -47,4 +47,16 @@
                          startValue="1"/>
     </changeSet>
 
+    <changeSet author="arthurpbelato" id="20210428202200-003">
+        <setColumnRemarks
+                          columnName="id_usuario"
+                          remarks="referencia tabela usuario"
+                          tableName="tb_item"/>
+    </changeSet>
+    <changeSet author="arthurpbelato" id="20210428202200-004">
+        <setColumnRemarks
+                columnName="id_categoria"
+                remarks="referencia tabela categoria"
+                tableName="tb_item"/>
+    </changeSet>
 </databaseChangeLog>
