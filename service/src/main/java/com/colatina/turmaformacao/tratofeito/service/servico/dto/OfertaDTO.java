@@ -8,7 +8,7 @@ import lombok.Setter;
 public class OfertaDTO {
     private long id;
     private ItemDTO itemDTO;
-    private UsuarioDTO usuarioOfertaDTO;
-    private SituacaoDTO situacaoDTO;
+    private String nomeUsuario;
+    private String situacao;
 
 }

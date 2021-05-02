@@ -3,7 +3,6 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
@@ -35,7 +34,7 @@ public class OfertaServico {
         return ofertaListagemMapper.toDto(ofertas);
     }
 
-    public OfertaDTO obeterPorId(long id){
+    public OfertaDTO obterPorId(long id){
         Oferta oferta = getOferta(id);
         return ofertaMapper.toDto(oferta);
     }

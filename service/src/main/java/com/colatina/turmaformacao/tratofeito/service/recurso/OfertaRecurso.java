@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/api/ofertas")
 public class OfertaRecurso {
 
-    final private OfertaServico ofertaServico;
+    private final OfertaServico ofertaServico;
 
     @GetMapping
     public ResponseEntity<List<OfertaListagemDTO>> listar(){
@@ -32,7 +32,7 @@ public class OfertaRecurso {
 
     @GetMapping("/{id}")
     public ResponseEntity<OfertaDTO> obeterPorId(@PathVariable("id") long id){
-        OfertaDTO oferta = ofertaServico.obeterPorId(id);
+        OfertaDTO oferta = ofertaServico.obterPorId(id);
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class OfertaRecurso {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") long id){
         ofertaServico.excluir(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
