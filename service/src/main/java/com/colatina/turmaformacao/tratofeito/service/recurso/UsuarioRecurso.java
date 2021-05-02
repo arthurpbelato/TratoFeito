@@ -1,6 +1,5 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
-import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.servico.UsuarioServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioListagemDTO;
