@@ -38,14 +38,14 @@ public class ItemRecurso {
 
     @PostMapping
     public ResponseEntity<ItemDTO> salvar(@RequestBody ItemDTO itemDTO) {
-        itemServico.salvar(itemDTO);
-        return new ResponseEntity<>(itemDTO, HttpStatus.CREATED);
+        ItemDTO salvo = itemServico.salvar(itemDTO);
+        return new ResponseEntity<>(salvo, HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<ItemDTO> alterar(@RequestBody ItemDTO itemDTO) {
-        itemServico.alterar(itemDTO);
-        return new ResponseEntity<>(itemDTO, HttpStatus.OK);
+        ItemDTO alterado = itemServico.alterar(itemDTO);
+        return new ResponseEntity<>(alterado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -30,17 +30,13 @@ public class ItemServico {
     }
 
     public List<ItemListagemDTO> listar() {
-        List<ItemListagemDTO> itensDTO = new ArrayList<>();
         List<Item> itens = itemRepositorio.findAll();
-        itensDTO = itemListagemMapper.toDto(itens);
-        return itensDTO;
+        return itemListagemMapper.toDto(itens);
     }
 
     public ItemDTO obterPorId(Long id) {
-        ItemDTO itemDTO = new ItemDTO();
         Item item = getItem(id);
-        itemDTO = itemMapper.toDto(item);
-        return itemDTO;
+        return itemMapper.toDto(item);
     }
 
     public ItemDTO salvar(ItemDTO itemDTO) {
