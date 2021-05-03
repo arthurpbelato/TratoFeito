@@ -5,15 +5,15 @@ import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemD
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {ItemMapper.class, UsuarioMapper.class, SituacaoMapper.class })
+@Mapper(componentModel = "spring")
 public interface OfertaListagemMapper extends EntityMapper<OfertaListagemDTO, Oferta>{
 
 
-    @Mapping(source = "usuario.nome", target = "nomeUsuario")
+    @Mapping(source = "usuarioOferta.nome", target = "nomeUsuario")
     @Mapping(source = "situacao.descricao", target = "situacao")
     OfertaListagemDTO toDto(Oferta entity);
 
-    @Mapping(source = "nomeUsuario" , target = "usuario.nome")
+    @Mapping(source = "nomeUsuario" , target = "usuarioOferta.nome")
     @Mapping(source = "situacao", target = "situacao.descricao")
     Oferta toEntity(OfertaListagemDTO dto);
 

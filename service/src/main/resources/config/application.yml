@@ -9,6 +9,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/tratofeito
     username: tratofeito
     password: tratofeito
+    hikari:
+      auto-commit: false
   jackson:
     date-format: yyyy-MM-dd
     deserialization:
