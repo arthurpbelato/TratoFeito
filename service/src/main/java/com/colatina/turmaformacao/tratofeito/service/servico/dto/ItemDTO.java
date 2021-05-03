@@ -1,4 +1,4 @@
-package com.colatina.turmaformacao.tratofeito.service.dto;
+package com.colatina.turmaformacao.tratofeito.service.servico.dto;
 
 import lombok.Getter;
 import lombok.Setter;

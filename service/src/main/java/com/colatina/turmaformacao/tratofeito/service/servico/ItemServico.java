@@ -1,8 +1,8 @@
 package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
-import com.colatina.turmaformacao.tratofeito.service.dto.ItemDTO;
-import com.colatina.turmaformacao.tratofeito.service.dto.ItemListagemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemListagemMapper;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

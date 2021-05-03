@@ -1,7 +1,7 @@
 package com.colatina.turmaformacao.tratofeito.service.servico.mapper;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
-import com.colatina.turmaformacao.tratofeito.service.dto.ItemListagemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,7 +1,7 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
-import com.colatina.turmaformacao.tratofeito.service.dto.ItemDTO;
-import com.colatina.turmaformacao.tratofeito.service.dto.ItemListagemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
