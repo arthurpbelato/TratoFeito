@@ -31,7 +31,7 @@ public class OfertaRecurso {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OfertaDTO> obeterPorId(@PathVariable("id") long id){
+    public ResponseEntity<OfertaDTO> obterPorId(@PathVariable("id") long id){
         OfertaDTO oferta = ofertaServico.obterPorId(id);
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }

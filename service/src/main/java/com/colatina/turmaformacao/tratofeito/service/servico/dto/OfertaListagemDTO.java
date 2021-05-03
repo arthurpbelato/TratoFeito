@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class OfertaListagemDTO {
     private long id;
-    private ItemDTO itemDTO;
+    private String nomeItem;
     private String nomeUsuario;
     private String situacao;
 
