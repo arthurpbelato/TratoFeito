@@ -29,13 +29,11 @@ public class UsuarioServico {
     }
 
     public List<UsuarioListagemDTO> listar(){
-        List<Usuario> usuarios = usuarioRepositorio.findAll();
-        return usuarioListagemMapper.toDto(usuarios);
+        return usuarioRepositorio.listarTodos();
     }
 
     public UsuarioDTO obterPorId(Long id) {
-        Usuario usuario = getUsuario(id);
-        return usuarioMapper.toDto(usuario);
+       return usuarioRepositorio.obterPorId(id);
     }
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
