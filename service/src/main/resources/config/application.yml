@@ -1,5 +1,8 @@
 application:
   appName: tratofeito
+  mail:
+    nome-remetente: Equipe Trato Feito
+    endereco-remetente: turmaformacao.tratofeito@gmail.com
 
 spring:
   application:
