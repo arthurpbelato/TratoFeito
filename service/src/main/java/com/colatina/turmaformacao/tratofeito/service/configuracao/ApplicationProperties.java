@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @RequiredArgsConstructor
 @Configuration
-@ConfigurationProperties(prefix = "application.mail")
+@ConfigurationProperties("application.mail")
 public class ApplicationProperties {
     private String enderecoRemetente;
     private String nomeRemetente;

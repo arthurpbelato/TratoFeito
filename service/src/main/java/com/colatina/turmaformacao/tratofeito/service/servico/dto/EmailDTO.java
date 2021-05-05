@@ -1,7 +1,6 @@
 package com.colatina.turmaformacao.tratofeito.service.servico.dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;

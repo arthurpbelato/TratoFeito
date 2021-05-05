@@ -1,5 +1,9 @@
 package com.colatina.turmaformacao.tratofeito.service.configuracao;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,7 +13,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 public class TratoFeitoConfig {
 
     @Bean
-    public JavaMailSender getJavaMailSender(){
-        return new JavaMailSenderImpl();
+    @ConfigurationProperties("spring.mail")
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+        javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.starttls.enable", "true");
+        javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.starttls.required", "true");
+        javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.auth", "true");
+        javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.quitwait", "false");
+        return javaMailSenderImpl;
     }
 }

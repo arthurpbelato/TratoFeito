@@ -1,10 +1,8 @@
 package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.configuracao.ApplicationProperties;
-import com.colatina.turmaformacao.tratofeito.service.configuracao.TratoFeitoConfig;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ public class EmailServico {
 
     private final JavaMailSender javaMailSender;
     private final ApplicationProperties applicationProperties;
-    private final TratoFeitoConfig tratoFeitoConfig;
 
     public void sendMail(EmailDTO emailDTO){
         try{
