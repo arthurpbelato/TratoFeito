@@ -2,7 +2,6 @@ package com.colatina.turmaformacao.tratofeito.service.builder;
 
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.UsuarioServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,12 +13,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +40,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     @BeforeEach
     public void inicializar(){
         usuarioRepositorio.deleteAll();
+        usuarioBuilder.removerCustomizacao();
     }
 
     private final String URL = "/api/usuarios";
@@ -54,10 +57,11 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void listagem() throws Exception{
-        Usuario usuario = usuarioBuilder.construir();
+        usuarioBuilder.construir();
         getMockMvc().perform(get(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(1)));
 
     }
 
@@ -81,10 +85,9 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void delete() throws Exception{
+    public void deletar() throws Exception{
         Usuario usuario = usuarioBuilder.construir();
-        getMockMvc().perform(MockMvcRequestBuilders
-                .delete(URL + "/" + usuario.getId().toString())
+        getMockMvc().perform(delete(URL+ "/" + usuario.getId())
         .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
@@ -93,6 +96,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void salvarCpfDuplicado() throws Exception{
         usuarioBuilder.construir();
         Usuario usuario = usuarioBuilder.construirEntidade();
+
         getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
@@ -102,9 +106,9 @@ public class UsuarioRecursoIT extends IntTestComum {
     @Test
     public void salvarEmailDuplicado() throws Exception{
         usuarioBuilder.construir();
-        Usuario usuario = usuarioBuilder.customizar(u -> {
-            u.setCpf("987654321");
-        }).construirEntidade();
+        Usuario usuario = usuarioBuilder.customizar(u -> u.setCpf("987654321"))
+                .construirEntidade();
+
         getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
