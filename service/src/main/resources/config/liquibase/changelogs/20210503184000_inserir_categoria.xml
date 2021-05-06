@@ -1,0 +1,49 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet  author="arthurpbelato"  id="20210503184000-001">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Colecionável"/>
+            <column  name="id"  value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-002">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Edição Especial"/>
+            <column  name="id"  value="2"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-003">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Antiguidade"/>
+            <column  name="id"  value="3"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-004">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Artesanal"/>
+            <column  name="id"  value="4"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-005">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Memorabilia"/>
+            <column  name="id"  value="5"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-006">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Item Autografado"/>
+            <column  name="id"  value="6"/>
+        </insert>
+    </changeSet>
+    <changeSet  author="arthurpbelato"  id="20210503184000-007">
+        <insert  tableName="tb_categoria">
+            <column  name="descricao"  value="Outro"/>
+            <column  name="id"  value="7"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
+
