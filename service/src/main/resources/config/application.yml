@@ -1,6 +1,8 @@
 application:
   appName: tratofeito
-
+  mail:
+    nome-remetente: Equipe Trato Feito
+    endereco-remetente: turmaformacao.tratofeito@gmail.com
 spring:
   application:
     name: service
@@ -29,5 +31,18 @@ spring:
   liquibase:
     change-log: classpath:/config/liquibase/master.xml
 #        drop-first: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: turmaformacao.tratofeito@gmail.com
+    password: 123698741abc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          quitwait: false
 server:
   port: 8080
