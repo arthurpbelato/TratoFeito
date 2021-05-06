@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -115,4 +117,83 @@ public class UsuarioRecursoIT extends IntTestComum {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void salvarNomeNulo() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setNome(null);
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarNomeVazio() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setNome("");
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarEmailNulo() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setEmail(null);
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarEmailInvalido() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setEmail("abc");
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarCpfNulo() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setCpf(null);
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarCpfInvalido() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setCpf("11111111111");
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarDataNula() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setDataNascimento(null);
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void salvarDataInvalida() throws Exception{
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setDataNascimento(LocalDate.MAX);
+        getMockMvc().perform(post(URL)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
+                .andExpect(status().isBadRequest());
+    }
 }
