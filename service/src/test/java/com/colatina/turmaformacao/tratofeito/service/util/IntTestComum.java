@@ -1,6 +1,6 @@
 package com.colatina.turmaformacao.tratofeito.service.util;
 
-import com.colatina.sgt.service.ServiceApplication;
+import com.colatina.turmaformacao.tratofeito.service.ServiceApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 
-@SpringBootTest(classes = ServiceApplication.class)
+@SpringBootTest(classes = {ServiceApplication.class})
 @ExtendWith(SpringExtension.class)
 public abstract class IntTestComum {
 
