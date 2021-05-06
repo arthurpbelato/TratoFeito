@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
@@ -29,4 +30,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
             " from Usuario u where u.id = :id")
     public UsuarioDTO obterPorId(@Param("id") Long id);
 
+    public Optional<Usuario> findByCpf(String cpf);
+    public Optional<Usuario> findByEmail(String email);
 }

@@ -10,5 +10,4 @@ public class OfertaDTO {
     private ItemDTO itemDTO;
     private String nomeUsuario;
     private String situacao;
-
 }
