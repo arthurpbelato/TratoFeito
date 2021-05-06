@@ -13,8 +13,7 @@ public interface ItemMapper extends EntityMapper<ItemDTO, Item> {
     ItemDTO toDto(Item entity);
 
     @Mapping(source = "idUsuario", target = "usuario.id")
-    @Mapping(source = "nomeUsuario", target = "usuario.nome")
-    @Mapping(source = "descricaoCategoria", target = "categoria.descricao")
+    @Mapping(source = "idCategoria", target = "categoria.id")
     Item toEntity(ItemDTO dto);
 
 }
