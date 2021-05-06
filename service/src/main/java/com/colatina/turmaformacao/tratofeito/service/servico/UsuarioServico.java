@@ -29,8 +29,8 @@ public class UsuarioServico {
                 throw new RegraNegocioException("CPF Duplicado");
         }
 
-        usuarioOptional = usuarioRepositorio.findByCpf(dto.getEmail());
-        if(usuarioOptional.isPresent() && !usuarioOptional.get().getId().equals(dto.getId())){
+        Optional<Usuario> usuarioOptional2 = usuarioRepositorio.findByEmail(dto.getEmail());
+        if(usuarioOptional2.isPresent() && !usuarioOptional2.get().getId().equals(dto.getId())){
             throw new RegraNegocioException("Email Duplicado");
         }
     }

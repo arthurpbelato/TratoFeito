@@ -108,9 +108,8 @@ public class UsuarioRecursoIT extends IntTestComum {
     @Test
     public void salvarEmailDuplicado() throws Exception{
         usuarioBuilder.construir();
-        Usuario usuario = usuarioBuilder.customizar(u -> u.setCpf("987654321"))
-                .construirEntidade();
-
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuario.setCpf("20733891047");
         getMockMvc().perform(post(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
