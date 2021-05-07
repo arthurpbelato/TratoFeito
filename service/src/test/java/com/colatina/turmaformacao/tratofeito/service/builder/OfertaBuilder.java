@@ -1,8 +1,6 @@
 package com.colatina.turmaformacao.tratofeito.service.builder;
 
-import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
-import com.colatina.turmaformacao.tratofeito.service.dominio.Situacao;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
@@ -13,7 +11,8 @@ import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
@@ -51,8 +50,7 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
 
         oferta.setUsuario(usuarioMapper.toEntity(usuarioServico.obterPorId(5000L)));
         oferta.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
-        oferta.setSituacao(situacaoRepositorio.findById(1000L)
-                .orElseThrow(()-> new RegraNegocioException("Situacao nao encontrada")));
+        oferta.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
 
 //        oferta.setUsuario(usuarioBuilder.customizar(u -> {
 //            u.setCpf("987654321");
@@ -62,6 +60,28 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
 //        oferta.setSituacao(situacao);
 
         return oferta;
+    }
+
+    private List<Oferta> construirOfertas(){
+        Oferta oferta1 = new Oferta();
+        Oferta oferta2 = new Oferta();
+
+        oferta1.setUsuario(usuarioBuilder.customizar(u -> {
+            u.setCpf("987654321");
+            u.setEmail("jorgin123@gmail.com");
+        }).construir());
+        oferta1.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
+        oferta1.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
+
+
+        oferta2.setUsuario(usuarioBuilder.customizar(u -> {
+            u.setCpf("987654321");
+            u.setEmail("jorgin123@gmail.com");
+        }).construir());
+        oferta1.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
+        oferta1.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
+
+        return null;
     }
 
     @Override

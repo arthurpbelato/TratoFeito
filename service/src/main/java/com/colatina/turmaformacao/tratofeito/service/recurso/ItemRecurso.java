@@ -55,7 +55,7 @@ public class ItemRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("disponibilizar/{id}/{disponibilidade}")
+    @PatchMapping("/disponibilizar/{id}/{disponibilidade}")
     public ResponseEntity<ItemDTO> disponibilizar
             (@PathVariable("id") Long id,
              @PathVariable("disponibilidade") Boolean disponibilidade) {

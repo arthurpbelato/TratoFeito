@@ -6,7 +6,9 @@ import com.colatina.turmaformacao.tratofeito.service.builder.UsuarioBuilder;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import com.colatina.turmaformacao.tratofeito.service.util.IntTestComum;
 import com.colatina.turmaformacao.tratofeito.service.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,13 +17,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest(classes = {ServiceApplication.class})
 @RunWith(SpringRunner.class)
@@ -43,14 +50,16 @@ public class OfertaRecursoIT extends IntTestComum {
     @BeforeEach
     public void inicializar(){
         ofertaRepositorio.deleteAll();
+        ofertaBuilder.removerCustomizacao();
     }
 
     @Test
-    public void listagem() throws Exception{
+    public void listar() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
         getMockMvc().perform(get("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
@@ -72,11 +81,10 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @Test
     public void atualizar()throws Exception{
-        Oferta oferta = ofertaBuilder.construir();
         Usuario usuario = usuarioBuilder.construir();
-        oferta.setUsuario(usuarioBuilder.customizar(u -> {
-            u.setEmail("teste321@gmail.com");
-        }).construir());
+        Oferta oferta = ofertaBuilder.customizar(o -> {
+            o.setUsuario(usuario);
+        }).construir();
         getMockMvc().perform(put("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
@@ -86,8 +94,8 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void excluir() throws  Exception{
         Oferta oferta = ofertaBuilder.construir();
-        getMockMvc().perform(MockMvcRequestBuilders
-                .delete("/api/ofertas" + "/" + oferta.getId().toString())
+        getMockMvc().perform(delete("/api/ofertas" + "/"
+                + oferta.getId().toString())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
