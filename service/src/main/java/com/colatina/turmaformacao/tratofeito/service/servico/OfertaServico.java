@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,22 +71,20 @@ public class OfertaServico {
         List<Item> itensOfertados = oferta.getItensOfertados();
         Item itemAlvo = oferta.getItem();
 
+        List<Item> items = oferta.getItensOfertados();
+        List<Long> idsItems = items.stream().map(Item::getId).collect(Collectors.toList());
+        List<Oferta> ofertasItemTrocado = ofertaRepositorio
+                .obterOfertasComItemAlvoTrocado(oferta.getItem().getId(),
+                        id,
+                        SituacaoEnum.AGUARDANDO_APROVACAO.getId(),
+                        idsItems);
+
         itemAlvo.setUsuario(ofertante);
         itensOfertados.forEach(item -> item.setUsuario(alvo));
         itemRepositorio.save(itemAlvo);
         itemRepositorio.saveAll(itensOfertados);
         ofertaRepositorio.save(oferta);
 
-        List<Item> items = oferta.getItensOfertados();
-        List<Long> idsItems = new ArrayList<>();
-        for(int i = 0; i<items.size(); i++){
-            idsItems.add(items.get(i).getId());
-        }
-        List<Oferta> ofertasItemTrocado = ofertaRepositorio
-                .obterOfertasComItemAlvoTrocado(oferta.getItem().getId(),
-                        id,
-                        SituacaoEnum.AGUARDANDO_APROVACAO.getId(),
-                        idsItems);
         if(!ofertasItemTrocado.isEmpty()){
             ofertasItemTrocado.forEach(o -> o.setSituacao(Situacao.getCancelada()));
             ofertaRepositorio.saveAll(ofertasItemTrocado);

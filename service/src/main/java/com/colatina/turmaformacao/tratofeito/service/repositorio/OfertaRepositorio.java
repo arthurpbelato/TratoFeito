@@ -13,7 +13,7 @@ import java.util.List;
 public interface OfertaRepositorio extends JpaRepository<Oferta, Long> {
 
     @Query("from Oferta o join o.itensOfertados itens where " +
-            "(o.item.id = :idItem or o.item.id IN :idItensOfertados or :idItem NOT IN itens.id) " +
+            "(o.item.id = :idItem or o.item.id IN :idItensOfertados or :idItem IN itens.id) " +
             " and o.id <> :idOferta " +
             "and o.situacao.id = :idSituacao" )
     public List<Oferta> obterOfertasComItemAlvoTrocado(@Param("idItem") Long idItem,
