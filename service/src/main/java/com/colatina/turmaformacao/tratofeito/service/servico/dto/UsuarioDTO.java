@@ -20,22 +20,19 @@ public class UsuarioDTO {
 
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Campo nome não pode ser null")
+    @NotEmpty(message = "Campo nome não pode ser vazio")
     private String nome;
 
-    @Past
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Campo data nascimento não pode ser null")
+    @Past(message = "Data de nascimento deve ser no passado")
     private LocalDate dataNascimento;
 
-    @Email
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Campo email não pode ser null")
+    @Email(message = "Email inválido")
     private String email;
 
-    @CPF
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Campo cpf não pode ser null")
+    @CPF(message = "CPF inválido")
     private String cpf;
 }

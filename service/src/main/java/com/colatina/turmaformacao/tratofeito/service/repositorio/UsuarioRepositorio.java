@@ -30,6 +30,8 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
             " from Usuario u where u.id = :id")
     public UsuarioDTO obterPorId(@Param("id") Long id);
 
+
     public Optional<Usuario> findByCpf(String cpf);
+
     public Optional<Usuario> findByEmail(String email);
 }
