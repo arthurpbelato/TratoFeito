@@ -40,13 +40,13 @@ public class ItemServico {
     public ItemDTO salvar(ItemDTO itemDTO) {
         Item item = itemMapper.toEntity(itemDTO);
         itemRepositorio.save(item);
-        return itemDTO;
+        return itemMapper.toDto(item);
     }
 
     public ItemDTO alterar(ItemDTO itemDTO) {
         Item item = itemMapper.toEntity(itemDTO);
         itemRepositorio.save(item);
-        return itemDTO;
+        return itemMapper.toDto(item);
     }
 
     public void deletar(Long id) {
