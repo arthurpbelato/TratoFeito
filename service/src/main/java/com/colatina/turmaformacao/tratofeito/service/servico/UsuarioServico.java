@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,6 +24,18 @@ public class UsuarioServico {
     private final UsuarioListagemMapper usuarioListagemMapper;
     private final UsuarioMapper usuarioMapper;
     private final EmailServico emailServico;
+
+    private void isDuplicado(UsuarioDTO dto){
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findByCpf(dto.getCpf());
+        if(usuarioOptional.isPresent() && !usuarioOptional.get().getId().equals(dto.getId())){
+                throw new RegraNegocioException("CPF Duplicado");
+        }
+
+        Optional<Usuario> usuarioOptional2 = usuarioRepositorio.findByEmail(dto.getEmail());
+        if(usuarioOptional2.isPresent() && !usuarioOptional2.get().getId().equals(dto.getId())){
+            throw new RegraNegocioException("Email Duplicado");
+        }
+    }
 
     private Usuario getUsuario(Long id){
         Usuario usuario = usuarioRepositorio.findById(id)
@@ -39,6 +52,7 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
+        isDuplicado(usuarioDTO);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setToken(UUID.randomUUID().toString());
         usuarioRepositorio.save(usuario);
@@ -55,6 +69,7 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO alterar(UsuarioDTO usuarioDTO) {
+        isDuplicado(usuarioDTO);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         Usuario usuarioSalvo = getUsuario(usuario.getId());
         usuario.setToken(usuarioSalvo.getToken());

@@ -9,13 +9,11 @@ import org.mapstruct.Mapping;
 public interface ItemMapper extends EntityMapper<ItemDTO, Item> {
 
     @Mapping(source = "usuario.id", target = "idUsuario")
-    @Mapping(source = "usuario.nome", target = "nomeUsuario")
-    @Mapping(source = "categoria.descricao", target = "descricaoCategoria")
+    @Mapping(source = "categoria.id", target = "idCategoria")
     ItemDTO toDto(Item entity);
 
     @Mapping(source = "idUsuario", target = "usuario.id")
-    @Mapping(source = "nomeUsuario", target = "usuario.nome")
-    @Mapping(source = "descricaoCategoria", target = "categoria.descricao")
+    @Mapping(source = "idCategoria", target = "categoria.id")
     Item toEntity(ItemDTO dto);
 
 }

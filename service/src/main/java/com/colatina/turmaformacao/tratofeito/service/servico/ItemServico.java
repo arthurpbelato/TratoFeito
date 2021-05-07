@@ -23,9 +23,8 @@ public class ItemServico {
     private final ItemListagemMapper itemListagemMapper;
 
     private Item getItem(Long id){
-        Item item = itemRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Item nao encontrado"));
-        return item;
+        return itemRepositorio.findById(id).orElseThrow(() ->
+                new RegraNegocioException("Item nao encontrado"));
     }
 
     public List<ItemListagemDTO> listar() {
@@ -53,4 +52,12 @@ public class ItemServico {
     public void deletar(Long id) {
         itemRepositorio.deleteById(id);
     }
+
+    public ItemDTO disponibilizar(ItemDTO itemDTO, boolean disponibilidade) {
+        Item item = itemMapper.toEntity(itemDTO);
+        item.setDisponibilidade(disponibilidade);
+        itemRepositorio.save(item);
+        return itemDTO;
+    }
+
 }

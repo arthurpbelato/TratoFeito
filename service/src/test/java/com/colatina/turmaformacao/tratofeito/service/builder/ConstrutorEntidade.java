@@ -27,4 +27,8 @@ public abstract class ConstrutorEntidade<E> {
 
     public abstract E construirEntidade();
     public abstract E persistir(E entidade);
+
+    public void removerCustomizacao(){
+        this.customizacao = null;
+    }
 }
