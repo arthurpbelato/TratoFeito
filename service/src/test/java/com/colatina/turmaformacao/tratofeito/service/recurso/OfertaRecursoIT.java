@@ -9,8 +9,8 @@ import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositor
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import com.colatina.turmaformacao.tratofeito.service.util.IntTestComum;
 import com.colatina.turmaformacao.tratofeito.service.util.TestUtil;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -92,6 +92,15 @@ public class OfertaRecursoIT extends IntTestComum {
                 .andExpect(status().isOk());
     }
 
+//    @Test
+//    public void aceitar() throws Exception{
+//
+//    }
+//
+//    @Test
+//    public void recusar() throws Exception{
+//
+//    }
 
 
 }
