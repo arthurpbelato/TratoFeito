@@ -2,16 +2,13 @@ package com.colatina.turmaformacao.tratofeito.service.builder;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.CategoriaRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@Transactional
 public class ItemBuilder extends ConstrutorEntidade<Item> {
 
     @Autowired
@@ -21,20 +18,20 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
     private ItemServico itemServico;
 
     @Autowired
-    private CategoriaRepositorio categoriaRepositorio;
+    private UsuarioBuilder usuarioBuilder;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private CategoriaRepositorio categoriaRepositorio;
 
     @Override
     public Item construirEntidade() {
         Item entidade = new Item();
-        entidade.setNome("item-teste");
-        entidade.setDescricao("Item inserido para teste.");
+        entidade.setNome("ItemTeste");
+        entidade.setDescricao("Iteminseridoparateste");
         entidade.setDisponibilidade(true);
         entidade.setSituacao("OK");
         entidade.setFoto(new byte[50]);
-        entidade.setUsuario(usuarioRepositorio.findById(28L).orElse(null));
+        entidade.setUsuario(usuarioBuilder.construir());
         entidade.setCategoria(categoriaRepositorio.findById(1L).orElse(null));
         return entidade;
     }

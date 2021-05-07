@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,13 +39,13 @@ public class ItemRecurso {
     }
 
     @PostMapping
-    public ResponseEntity<ItemDTO> salvar(@RequestBody ItemDTO itemDTO) {
+    public ResponseEntity<ItemDTO> salvar(@RequestBody @Valid ItemDTO itemDTO) {
         ItemDTO salvo = itemServico.salvar(itemDTO);
         return new ResponseEntity<>(salvo, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<ItemDTO> alterar(@RequestBody ItemDTO itemDTO) {
+    public ResponseEntity<ItemDTO> alterar(@RequestBody @Valid ItemDTO itemDTO) {
         ItemDTO alterado = itemServico.alterar(itemDTO);
         return new ResponseEntity<>(alterado, HttpStatus.OK);
     }
@@ -55,7 +56,7 @@ public class ItemRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("disponibilizar/{id}/{disponibilidade}")
+    @PatchMapping("/disponibilizar/{id}/{disponibilidade}")
     public ResponseEntity<ItemDTO> disponibilizar
             (@PathVariable("id") Long id,
              @PathVariable("disponibilidade") Boolean disponibilidade) {
