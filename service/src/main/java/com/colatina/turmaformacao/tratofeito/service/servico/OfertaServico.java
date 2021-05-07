@@ -8,6 +8,7 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
@@ -27,7 +28,7 @@ public class OfertaServico {
 
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
-
+    private final EmailServico emailServico;
     private final ItemRepositorio itemRepositorio;
 
     private Oferta getOferta(long id){
@@ -80,7 +81,11 @@ public class OfertaServico {
                         idsItems);
 
         itemAlvo.setUsuario(ofertante);
-        itensOfertados.forEach(item -> item.setUsuario(alvo));
+        itemAlvo.setDisponibilidade(false);
+        itensOfertados.forEach(item -> {
+            item.setUsuario(alvo);
+            item.setDisponibilidade(false);
+        });
         itemRepositorio.save(itemAlvo);
         itemRepositorio.saveAll(itensOfertados);
         ofertaRepositorio.save(oferta);
@@ -95,5 +100,16 @@ public class OfertaServico {
     public void recusar(Long id) {
         Oferta oferta = ofertaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
+
+        oferta.setSituacao(Situacao.getRecusada());
     }
+
+    private EmailDTO criarEmail(Oferta oferta){
+        EmailDTO email = new EmailDTO();
+        email.setAssunto("Chegou uma oferta!!");
+        email.setCorpo("Alguém fez uma oferta no seu item: "+oferta.getItem().getNome());
+        email.setDestinatario(oferta.getItem().getUsuario().getEmail());
+        return email;
+    }
+
 }
