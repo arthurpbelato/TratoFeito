@@ -1,12 +1,15 @@
 package com.colatina.turmaformacao.tratofeito.service.builder;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
+import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.CategoriaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class ItemBuilder extends ConstrutorEntidade<Item> {
@@ -33,6 +36,17 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setFoto(new byte[50]);
         entidade.setUsuario(usuarioBuilder.construir());
         entidade.setCategoria(categoriaRepositorio.findById(1L).orElse(null));
+        return entidade;
+    }
+
+    public Item criarNovoItem() {
+        Item entidade = new Item();
+        entidade.setNome("item-teste-alterado");
+        entidade.setDescricao("Item inserido e alterado para teste.");
+        entidade.setFoto(new byte[20]);
+        entidade.setDisponibilidade(false);
+        entidade.setSituacao("Item inserido e alterado para teste.");
+        entidade.setCategoria(categoriaRepositorio.findById(2L).orElse(null));
         return entidade;
     }
 
