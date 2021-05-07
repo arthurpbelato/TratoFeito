@@ -12,6 +12,6 @@ public class ItemDTO {
     private byte[] foto;
     private Boolean disponibilidade;
     private String situacao;
-    private Long idCategoria;
     private Long idUsuario;
+    private Long idCategoria;
 }

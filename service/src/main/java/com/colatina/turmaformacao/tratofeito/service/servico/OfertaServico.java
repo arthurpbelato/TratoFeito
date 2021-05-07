@@ -6,11 +6,11 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Situacao;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
-import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaListagemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,18 +26,15 @@ public class OfertaServico {
 
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
-    private final OfertaListagemMapper ofertaListagemMapper;
 
+    private final ItemRepositorio itemRepositorio;
 
     private Oferta getOferta(long id){
-        Oferta oferta = ofertaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Oferta nao encontrada"));
-        return oferta;
+        return ofertaRepositorio.findOfertaById(id);
     }
 
     public List<OfertaListagemDTO> listar(){
-        List<Oferta> ofertas = ofertaRepositorio.findAll();
-        return ofertaListagemMapper.toDto(ofertas);
+        return ofertaRepositorio.listOferta();
     }
 
     public OfertaDTO obterPorId(long id){
@@ -71,20 +67,30 @@ public class OfertaServico {
 
         Usuario ofertante = new Usuario(oferta.getUsuario().getId());
         Usuario alvo = new Usuario(oferta.getItem().getUsuario().getId());
+        List<Item> itensOfertados = oferta.getItensOfertados();
+        Item itemAlvo = oferta.getItem();
 
-        oferta.getItem().setUsuario(ofertante);
-        oferta.getItensOfertados().forEach(item -> item.setUsuario(alvo));
+        itemAlvo.setUsuario(ofertante);
+        itensOfertados.forEach(item -> item.setUsuario(alvo));
+        itemRepositorio.save(itemAlvo);
+        itemRepositorio.saveAll(itensOfertados);
         ofertaRepositorio.save(oferta);
+
         List<Item> items = oferta.getItensOfertados();
         List<Long> idsItems = new ArrayList<>();
         for(int i = 0; i<items.size(); i++){
             idsItems.add(items.get(i).getId());
         }
-        List<Oferta> ofertasItemAlvoTrocado = ofertaRepositorio
+        List<Oferta> ofertasItemTrocado = ofertaRepositorio
                 .obterOfertasComItemAlvoTrocado(oferta.getItem().getId(),
                         id,
                         SituacaoEnum.AGUARDANDO_APROVACAO.getId(),
                         idsItems);
+        if(!ofertasItemTrocado.isEmpty()){
+            ofertasItemTrocado.forEach(o -> o.setSituacao(Situacao.getCancelada()));
+            ofertaRepositorio.saveAll(ofertasItemTrocado);
+        }
+
     }
 
     public void recusar(Long id) {
