@@ -24,14 +24,11 @@ public class OfertaServico {
     private final OfertaListagemMapper ofertaListagemMapper;
 
     private Oferta getOferta(long id){
-        Oferta oferta = ofertaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Oferta nao encontrada"));
-        return oferta;
+        return ofertaRepositorio.findOfertaById(id);
     }
 
     public List<OfertaListagemDTO> listar(){
-        List<Oferta> ofertas = ofertaRepositorio.findAll();
-        return ofertaListagemMapper.toDto(ofertas);
+        return ofertaRepositorio.listOferta();
     }
 
     public OfertaDTO obterPorId(long id){

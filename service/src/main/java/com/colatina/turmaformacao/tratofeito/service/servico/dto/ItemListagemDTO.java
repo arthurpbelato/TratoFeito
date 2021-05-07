@@ -12,4 +12,5 @@ public class ItemListagemDTO {
     private Boolean disponibilidade;
     private String descricaoCategoria;
     private Long idUsuario;
+
 }
