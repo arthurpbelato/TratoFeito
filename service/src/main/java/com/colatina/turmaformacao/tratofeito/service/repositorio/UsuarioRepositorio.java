@@ -31,7 +31,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     public UsuarioDTO obterPorId(@Param("id") Long id);
 
 
-    public Optional<Usuario> findByCpf(@Param("cpf") String cpf);
+    public Optional<Usuario> findByCpf(String cpf);
 
     public Optional<Usuario> findByEmail(String email);
 }
