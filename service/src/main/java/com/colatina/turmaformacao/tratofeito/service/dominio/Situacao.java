@@ -26,24 +26,4 @@ public class Situacao implements Serializable {
 
     @Column(name = "descricao")
     private String descricao;
-
-    public static Situacao getAprovada(){
-        return new Situacao(SituacaoEnum.APROVADA.getId(),
-                SituacaoEnum.APROVADA.getDescricao());
-    }
-
-    public static Situacao getCancelada(){
-        return new Situacao(SituacaoEnum.CANCELADA.getId(),
-                SituacaoEnum.CANCELADA.getDescricao());
-    }
-
-    public static Situacao getRecusada(){
-        return new Situacao(SituacaoEnum.RECUSADA.getId()
-                , SituacaoEnum.RECUSADA.getDescricao());
-    }
-
-    public static Situacao getAguardandoAprovacao(){
-        return new Situacao(SituacaoEnum.AGUARDANDO_APROVACAO.getId(),
-                SituacaoEnum.AGUARDANDO_APROVACAO.getDescricao());
-    }
 }

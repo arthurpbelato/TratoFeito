@@ -53,14 +53,4 @@ public class Oferta implements Serializable{
     )
     private List<Item> itensOfertados;
 
-    @Override
-    public String toString() {
-        return "Oferta{" +
-                "id=" + id +
-                ", item=" + item +
-                ", usuario=" + usuario +
-                ", situacao=" + situacao +
-                ", itensOfertados=" + itensOfertados +
-                '}';
-    }
 }
