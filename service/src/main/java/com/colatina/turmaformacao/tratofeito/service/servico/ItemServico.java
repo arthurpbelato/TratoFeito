@@ -57,7 +57,7 @@ public class ItemServico {
         Item item = itemMapper.toEntity(itemDTO);
         item.setDisponibilidade(disponibilidade);
         itemRepositorio.save(item);
-        return itemDTO;
+        return itemMapper.toDto(item);
     }
 
 }
