@@ -42,9 +42,6 @@ public class ItemRecursoIT extends IntTestComum {
     @Autowired
     private ItemRepositorio itemRepositorio;
 
-    @Autowired
-    private CategoriaRepositorio categoriaRepositorio;
-
     private int itemRepositorioCount;
 
     @BeforeEach
