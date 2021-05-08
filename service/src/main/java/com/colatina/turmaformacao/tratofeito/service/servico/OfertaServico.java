@@ -13,6 +13,7 @@ import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,9 @@ public class OfertaServico {
     private final UsuarioServico usuarioServico;
     private final ItemRepositorio itemRepositorio;
     private final SituacaoRepositorio situacaoRepositorio;
+    private final ItemMapper itemMapper;
 
-    private Oferta getOferta(long id){
+    private Oferta getOferta(Long id){
         return ofertaRepositorio.findOfertaById(id);
     }
 
@@ -42,7 +44,7 @@ public class OfertaServico {
         return ofertaRepositorio.listOferta();
     }
 
-    public OfertaDTO obterPorId(long id){
+    public OfertaDTO obterPorId(Long id){
         Oferta oferta = getOferta(id);
         return ofertaMapper.toDto(oferta);
     }
@@ -58,14 +60,14 @@ public class OfertaServico {
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
 
         ItemDTO itemAlvo = itemServico.obterPorId(ofertaDTO.getIdItemAlvo());
-        UsuarioDTO usuarioAlvo = usuarioServico.obterPorId(ofertaDTO.getIdUsuario());
+        UsuarioDTO usuarioAlvo = usuarioServico.obterPorId(itemAlvo.getIdUsuario());
 
         ofertaRepositorio.save(oferta);
-        emailServico.sendMail(criarEmail(usuarioAlvo, itemAlvo));
+        emailServico.sendMail(criarEmailNovaOferta(usuarioAlvo, itemAlvo));
         return ofertaMapper.toDto(oferta);
     }
 
-    public void excluir(long id){
+    public void excluir(Long id){
         ofertaRepositorio.deleteById(id);
     }
 
@@ -75,11 +77,11 @@ public class OfertaServico {
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.APROVADA.getId()));
 
-        Usuario ofertante = new Usuario(oferta.getUsuario().getId());
+        UsuarioDTO usuarioDTO = usuarioServico.obterPorId(oferta.getUsuario().getId());
+        Usuario ofertante = new Usuario(usuarioDTO.getId());
         Usuario alvo = new Usuario(oferta.getItem().getUsuario().getId());
         List<Item> itensOfertados = oferta.getItensOfertados();
         Item itemAlvo = oferta.getItem();
-
         List<Item> items = oferta.getItensOfertados();
         List<Long> idsItems = items.stream().map(Item::getId).collect(Collectors.toList());
         List<Oferta> ofertasItemTrocado = ofertaRepositorio
@@ -94,10 +96,11 @@ public class OfertaServico {
             item.setUsuario(alvo);
             item.setDisponibilidade(false);
         });
-        itemRepositorio.save(itemAlvo);
-        itemRepositorio.saveAll(itensOfertados);
+        ItemDTO itemDTO = itemMapper.toDto(itemAlvo);
+        itemServico.alterar(itemDTO);
+        itemServico.salvarLista(itensOfertados);
         ofertaRepositorio.save(oferta);
-
+        emailServico.sendMail(criarEmailAceitarOferta(usuarioDTO, itemDTO));
         if(!ofertasItemTrocado.isEmpty()){
             ofertasItemTrocado.forEach(o ->
                     o.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.CANCELADA.getId())));
@@ -109,11 +112,32 @@ public class OfertaServico {
     public void recusar(Long id) {
         Oferta oferta = ofertaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
+        UsuarioDTO usuarioDTO = usuarioServico.obterPorId(oferta.getUsuario().getId());
+        ItemDTO itemDTO = itemServico.obterPorId(oferta.getItem().getId());
 
+        emailServico.sendMail(criarEmailRecusarOferta(usuarioDTO,itemDTO));
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.RECUSADA.getId()));
     }
 
-    private EmailDTO criarEmail(UsuarioDTO usuarioDTO, ItemDTO itemDTO){
+    private EmailDTO criarEmailRecusarOferta(UsuarioDTO usuarioDTO, ItemDTO itemDTO){
+        EmailDTO email = new EmailDTO();
+        email.setAssunto("Sua oferta foi recusada...");
+        email.setCorpo("A oferta que você fez no item "+itemDTO.getNome()+" foi recusada!<br>" +
+                "Não desanime! Você pode realizar ofertas diferentes para tentar conseguir esse item!");
+        email.setDestinatario(usuarioDTO.getEmail());
+        return email;
+    }
+
+    private EmailDTO criarEmailAceitarOferta(UsuarioDTO usuarioDTO, ItemDTO itemDTO){
+        EmailDTO email = new EmailDTO();
+        email.setAssunto("Sua oferta foi aceita!!!");
+        email.setCorpo("Boas notícias! A oferta que você no item: "+itemDTO.getNome() + " foi aceita!<br>" +
+                "Seu novo item te aguarda!");
+        email.setDestinatario(usuarioDTO.getEmail());
+        return email;
+    }
+
+    private EmailDTO criarEmailNovaOferta(UsuarioDTO usuarioDTO, ItemDTO itemDTO){
         EmailDTO email = new EmailDTO();
         email.setAssunto("Chegou uma oferta!!");
         email.setCorpo("Alguém fez uma oferta no seu item: "+itemDTO.getNome());

@@ -9,7 +9,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,4 +30,10 @@ public interface OfertaMapper extends EntityMapper<OfertaDTO, Oferta>{
         oferta.setItensOfertados(itens);
     }
 
+    @AfterMapping
+    default void mapItemListDTO(Oferta oferta,@MappingTarget  OfertaDTO ofertaDTO){
+        List<Item> itens = oferta.getItensOfertados();
+        List<Long> ids = itens.stream().map(Item::getId).collect(Collectors.toList());
+        ofertaDTO.setIdItensOfertados(ids);
+    }
 }
