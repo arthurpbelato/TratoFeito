@@ -1,5 +1,6 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
+import com.colatina.turmaformacao.tratofeito.service.seguranca.Autenticacao;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
@@ -25,6 +26,8 @@ public class OfertaRecurso {
 
     private final OfertaServico ofertaServico;
 
+    private final Autenticacao autenticacao;
+
     @GetMapping
     public ResponseEntity<List<OfertaListagemDTO>> listar(){
         List<OfertaListagemDTO> ofertas = ofertaServico.listar();
@@ -37,14 +40,16 @@ public class OfertaRecurso {
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO){
+    @PutMapping("/{token}")
+    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
+        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
         OfertaDTO oferta = ofertaServico.atualizar(ofertaDTO);
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO){
+    @PostMapping("/{token}")
+    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
+        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
         OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);
         return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }
@@ -55,22 +60,16 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("aceitar/{id}")
-    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id){
-        ofertaServico.aceitar(id);
+    @PatchMapping("/aceitar/{token}")
+    public ResponseEntity<Void> aceitar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
+        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioAlvo(), token);
+        ofertaServico.aceitar(ofertaDTO.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("recusar/{id}")
+    @PatchMapping("/recusar/{id}")
     public ResponseEntity<Void> recusar(@PathVariable("id") Long id){
         ofertaServico.recusar(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-    @PatchMapping("aceitar/{id}/{token}")
-    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id, @PathVariable("token") String token){
-        if(ofertaServico.isAlvoAutenticado(id, token)){
-            ofertaServico.aceitar(id);
-        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
