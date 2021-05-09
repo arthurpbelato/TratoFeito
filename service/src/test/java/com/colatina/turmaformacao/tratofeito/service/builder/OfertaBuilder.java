@@ -53,7 +53,7 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     @Override
     public Oferta construirEntidade() {
         Oferta oferta = new Oferta();
-        Usuario usuario = new Usuario();
+        Usuario usuario = usuarioBuilder.construir();
         List <Item> itens = new ArrayList<>();
 
         itens.add(itemBuilder.customizar(i -> {
@@ -65,15 +65,15 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
             }).construir());
         }).construir());
 
-        oferta.setItem(itemBuilder.customizar(i -> {
-           i.setUsuario(usuario);
-        }).construir());
+        oferta.setItem(itemBuilder.construir());
         oferta.setUsuario(usuario);
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
         oferta.setItensOfertados(itens);
 
         return oferta;
     }
+
+
 
     @Override
     public Oferta persistir(Oferta entidade) {

@@ -4,6 +4,7 @@ import com.colatina.turmaformacao.tratofeito.service.ServiceApplication;
 import com.colatina.turmaformacao.tratofeito.service.builder.ItemBuilder;
 import com.colatina.turmaformacao.tratofeito.service.builder.OfertaBuilder;
 import com.colatina.turmaformacao.tratofeito.service.builder.UsuarioBuilder;
+import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
@@ -72,7 +73,7 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @Test
     public void listar() throws Exception{
-        ofertaBuilder.construirEntidade();
+        ofertaBuilder.construir();
         getMockMvc().perform(get("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -81,7 +82,7 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @Test
     public void salvar() throws  Exception{
-        Oferta oferta = ofertaBuilder.construirEntidade();
+        Oferta oferta = ofertaBuilder.construir();
         getMockMvc().perform(post("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
@@ -98,10 +99,9 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @Test
     public void atualizar()throws Exception{
-        Usuario usuario = usuarioBuilder.construir();
-        Oferta oferta = ofertaBuilder.customizar(o -> {
-            o.setUsuario(usuario);
-        }).construir();
+        Oferta oferta = ofertaBuilder.construir();
+        Item item = itemBuilder.criarNovoItem();
+        oferta.setItem(item);
         getMockMvc().perform(put("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
