@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,6 +53,14 @@ public class OfertaRecurso {
     public ResponseEntity<Void> excluir(@PathVariable("id") long id){
         ofertaServico.excluir(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("aceitar/{id}/{token}")
+    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id, @PathVariable("token") String token){
+        if(ofertaServico.isAlvoAutenticado(id, token)){
+            ofertaServico.aceitar(id);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

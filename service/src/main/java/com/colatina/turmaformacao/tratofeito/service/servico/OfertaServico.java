@@ -3,11 +3,14 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaListagemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,8 @@ import java.util.List;
 @Transactional
 public class OfertaServico {
 
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioMapper usuarioMapper;
     private final OfertaRepositorio ofertaRepositorio;
     private final OfertaMapper ofertaMapper;
     private final OfertaListagemMapper ofertaListagemMapper;
@@ -50,5 +55,23 @@ public class OfertaServico {
 
     public void excluir(long id){
         ofertaRepositorio.deleteById(id);
+    }
+
+    public void aceitar(Long id) {
+    }
+
+    public boolean isAlvoAutenticado(Long idOferta, String token) {
+        boolean result = false;
+        UsuarioDTO usuarioAlvo = obterUsuarioDTOPorToken(token);
+        if(usuarioAlvo != null){
+            if(ofertaMapper.toDto(ofertaRepositorio.findOfertaById(idOferta)).getIdUsuario() == usuarioAlvo.getId()){
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private UsuarioDTO obterUsuarioDTOPorToken(String token) {
+        return usuarioMapper.toDto(usuarioRepositorio.findUsuarioByToken(token));
     }
 }
