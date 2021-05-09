@@ -1,6 +1,8 @@
 package com.colatina.turmaformacao.tratofeito.service.dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -22,6 +24,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "tb_oferta")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Oferta implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_oferta")
@@ -45,7 +49,7 @@ public class Oferta implements Serializable{
     @JoinTable(
             name = "tb_item_ofertado",
             joinColumns = @JoinColumn(name = "id_oferta"),
-            inverseJoinColumns = @JoinColumn(name = "id_item_ofertados")
+            inverseJoinColumns = @JoinColumn(name = "id_item_ofertado")
     )
     private List<Item> itensOfertados;
 

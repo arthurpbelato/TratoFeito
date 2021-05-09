@@ -1,6 +1,8 @@
 package com.colatina.turmaformacao.tratofeito.service.dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -17,6 +19,8 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "tb_usuario")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario implements Serializable {
 
     @Id
@@ -39,5 +43,21 @@ public class Usuario implements Serializable {
 
     @Column(name = "dt_nascimento")
     private LocalDate dataNascimento;
+
+    public Usuario(Long id){
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", token='" + token + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                '}';
+    }
 }
 

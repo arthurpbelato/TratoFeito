@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,7 +46,7 @@ public class OfertaRecurso {
     @PostMapping
     public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO){
         OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);
-        return new ResponseEntity<>(oferta, HttpStatus.OK);
+        return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -54,4 +55,15 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping("aceitar/{id}")
+    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id){
+        ofertaServico.aceitar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("recusar/{id}")
+    public ResponseEntity<Void> recusar(@PathVariable("id") Long id){
+        ofertaServico.recusar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
