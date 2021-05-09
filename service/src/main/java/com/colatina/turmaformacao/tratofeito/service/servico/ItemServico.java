@@ -1,9 +1,9 @@
 package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemListagemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
@@ -53,11 +53,15 @@ public class ItemServico {
         itemRepositorio.deleteById(id);
     }
 
-    public ItemDTO disponibilizar(ItemDTO itemDTO, boolean disponibilidade) {
+    public ItemDTO disponibilizar(ItemDTO itemDTO, Boolean disponibilidade) {
         Item item = itemMapper.toEntity(itemDTO);
         item.setDisponibilidade(disponibilidade);
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
+    }
+
+    public List<Item> salvarLista (List<Item> lista){
+        return itemRepositorio.saveAll(lista);
     }
 
 }

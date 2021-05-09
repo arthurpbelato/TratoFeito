@@ -46,7 +46,7 @@ public class OfertaRecurso {
     @PostMapping
     public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO){
         OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);
-        return new ResponseEntity<>(oferta, HttpStatus.OK);
+        return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -55,6 +55,17 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping("aceitar/{id}")
+    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id){
+        ofertaServico.aceitar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("recusar/{id}")
+    public ResponseEntity<Void> recusar(@PathVariable("id") Long id){
+        ofertaServico.recusar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     @PatchMapping("aceitar/{id}/{token}")
     public ResponseEntity<Void> aceitar(@PathVariable("id") Long id, @PathVariable("token") String token){
         if(ofertaServico.isAlvoAutenticado(id, token)){
