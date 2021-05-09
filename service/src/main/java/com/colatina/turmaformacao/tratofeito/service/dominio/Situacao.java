@@ -1,6 +1,5 @@
 package com.colatina.turmaformacao.tratofeito.service.dominio;
 
-import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

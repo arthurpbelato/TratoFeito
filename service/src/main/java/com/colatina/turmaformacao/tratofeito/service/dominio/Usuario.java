@@ -47,5 +47,17 @@ public class Usuario implements Serializable {
     public Usuario(Long id){
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", token='" + token + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                '}';
+    }
 }
 

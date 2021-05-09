@@ -53,11 +53,15 @@ public class ItemServico {
         itemRepositorio.deleteById(id);
     }
 
-    public ItemDTO disponibilizar(ItemDTO itemDTO, boolean disponibilidade) {
+    public ItemDTO disponibilizar(ItemDTO itemDTO, Boolean disponibilidade) {
         Item item = itemMapper.toEntity(itemDTO);
         item.setDisponibilidade(disponibilidade);
         itemRepositorio.save(item);
         return itemMapper.toDto(item);
+    }
+
+    public List<Item> salvarLista (List<Item> lista){
+        return itemRepositorio.saveAll(lista);
     }
 
 }

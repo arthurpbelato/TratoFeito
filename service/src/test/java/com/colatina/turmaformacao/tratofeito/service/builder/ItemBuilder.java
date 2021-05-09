@@ -34,6 +34,7 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setUsuario(usuarioBuilder.construir());
         entidade.setCategoria(categoriaRepositorio.findById(1L).orElse(null));
         return entidade;
+
     }
 
     public Item criarNovoItem() {
@@ -45,12 +46,14 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setSituacao("Item inserido e alterado para teste.");
         entidade.setCategoria(categoriaRepositorio.findById(2L).orElse(null));
         return entidade;
+
     }
 
     @Override
     public Item persistir(Item entidade) {
         ItemDTO entidadeSalva = itemServico.salvar(itemMapper.toDto(entidade));
         return itemMapper.toEntity(entidadeSalva);
+
     }
 
 }
