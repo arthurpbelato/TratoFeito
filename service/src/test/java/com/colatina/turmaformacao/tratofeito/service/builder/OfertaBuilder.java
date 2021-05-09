@@ -1,6 +1,10 @@
 package com.colatina.turmaformacao.tratofeito.service.builder;
 
+import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
+import com.colatina.turmaformacao.tratofeito.service.dominio.Situacao;
+import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
+import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
@@ -12,6 +16,7 @@ import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMappe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -41,47 +46,33 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     @Autowired
     private SituacaoRepositorio situacaoRepositorio;
 
+    @Autowired
+    private ItemBuilder itemBuilder;
+
 
     @Override
     public Oferta construirEntidade() {
         Oferta oferta = new Oferta();
-//        Item item = new Item();
-//        Situacao situacao = new Situacao();
+        Usuario usuario = new Usuario();
+        List <Item> itens = new ArrayList<>();
 
-        oferta.setUsuario(usuarioMapper.toEntity(usuarioServico.obterPorId(5000L)));
-        oferta.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
-        oferta.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
+        itens.add(itemBuilder.customizar(i -> {
+            i.setNome("Item2");
+            i.setDescricao("Item que esta sendo ofertado para o item alvo");
+            i.setUsuario(usuarioBuilder.customizar( u -> {
+                u.setEmail("usuariotroca123@gmail.com");
+                u.setCpf("58043162069");
+            }).construir());
+        }).construir());
 
-//        oferta.setUsuario(usuarioBuilder.customizar(u -> {
-//            u.setCpf("987654321");
-//            u.setEmail("jorgin123@gmail.com");
-//            }).construir());
-//        oferta.setItem(item);
-//        oferta.setSituacao(situacao);
+        oferta.setItem(itemBuilder.customizar(i -> {
+           i.setUsuario(usuario);
+        }).construir());
+        oferta.setUsuario(usuario);
+        oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
+        oferta.setItensOfertados(itens);
 
         return oferta;
-    }
-
-    private List<Oferta> construirOfertas(){
-        Oferta oferta1 = new Oferta();
-        Oferta oferta2 = new Oferta();
-
-        oferta1.setUsuario(usuarioBuilder.customizar(u -> {
-            u.setCpf("987654321");
-            u.setEmail("jorgin123@gmail.com");
-        }).construir());
-        oferta1.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
-        oferta1.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
-
-
-        oferta2.setUsuario(usuarioBuilder.customizar(u -> {
-            u.setCpf("987654321");
-            u.setEmail("jorgin123@gmail.com");
-        }).construir());
-        oferta1.setItem(itemMapper.toEntity(itemServico.obterPorId(5000L)));
-        oferta1.setSituacao(situacaoRepositorio.findById(1000L).orElse(null));
-
-        return null;
     }
 
     @Override

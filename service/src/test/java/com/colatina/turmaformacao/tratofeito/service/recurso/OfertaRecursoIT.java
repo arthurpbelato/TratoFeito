@@ -1,10 +1,12 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.ServiceApplication;
+import com.colatina.turmaformacao.tratofeito.service.builder.ItemBuilder;
 import com.colatina.turmaformacao.tratofeito.service.builder.OfertaBuilder;
 import com.colatina.turmaformacao.tratofeito.service.builder.UsuarioBuilder;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
@@ -47,15 +49,30 @@ public class OfertaRecursoIT extends IntTestComum {
     @Autowired
     private UsuarioBuilder usuarioBuilder;
 
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private ItemRepositorio itemRepositorio;
+
+    @Autowired
+    private ItemBuilder itemBuilder;
+
     @BeforeEach
     public void inicializar(){
+
+        usuarioRepositorio.deleteAll();
+        itemRepositorio.deleteAll();
         ofertaRepositorio.deleteAll();
+        usuarioBuilder.removerCustomizacao();
+        itemBuilder.removerCustomizacao();
         ofertaBuilder.removerCustomizacao();
+
     }
 
     @Test
     public void listar() throws Exception{
-        Oferta oferta = ofertaBuilder.construir();
+        ofertaBuilder.construirEntidade();
         getMockMvc().perform(get("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
