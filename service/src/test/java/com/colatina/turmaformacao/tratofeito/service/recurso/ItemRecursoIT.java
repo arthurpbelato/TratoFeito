@@ -42,9 +42,6 @@ public class ItemRecursoIT extends IntTestComum {
     @Autowired
     private ItemRepositorio itemRepositorio;
 
-    @Autowired
-    private CategoriaRepositorio categoriaRepositorio;
-
     private int itemRepositorioCount;
 
     @BeforeEach
@@ -76,20 +73,14 @@ public class ItemRecursoIT extends IntTestComum {
     public void obterPorId() throws Exception {
         Item entidade = itemBuilder.construir();
         getMockMvc().perform(get(URL + "/" + entidade.getId())
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(entidade))))
+                .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void alterar() throws Exception {
-        Item entidade = itemBuilder.construir();
-        entidade.setNome("item-teste-alterado");
-        entidade.setDescricao("Item inserido e alterado para teste.");
-        entidade.setFoto(new byte[20]);
-        entidade.setDisponibilidade(false);
-        entidade.setSituacao("Item inserido e alterado para teste.");
-        entidade.setCategoria(categoriaRepositorio.findById(2L).orElse(null));
+        itemBuilder.construir();
+        Item entidade = itemBuilder.criarNovoItem();
         getMockMvc().perform(put(URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(itemMapper.toDto(entidade))))

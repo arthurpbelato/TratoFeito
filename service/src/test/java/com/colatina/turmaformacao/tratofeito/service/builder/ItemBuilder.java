@@ -36,6 +36,17 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         return entidade;
     }
 
+    public Item criarNovoItem() {
+        Item entidade = new Item();
+        entidade.setNome("item-teste-alterado");
+        entidade.setDescricao("Item inserido e alterado para teste.");
+        entidade.setFoto(new byte[20]);
+        entidade.setDisponibilidade(false);
+        entidade.setSituacao("Item inserido e alterado para teste.");
+        entidade.setCategoria(categoriaRepositorio.findById(2L).orElse(null));
+        return entidade;
+    }
+
     @Override
     public Item persistir(Item entidade) {
         ItemDTO entidadeSalva = itemServico.salvar(itemMapper.toDto(entidade));
