@@ -4,17 +4,16 @@ import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioReposito
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.UsuarioNaoAutenticadoException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class Autenticacao {
 
-    @Autowired
-    private UsuarioMapper usuarioMapper;
+    private final UsuarioMapper usuarioMapper;
 
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
     public void validarUsuario(Long idUsuario, String token) {
         UsuarioDTO usuarioAlvo = obterUsuarioDTOPorToken(token);
@@ -24,6 +23,6 @@ public class Autenticacao {
     }
 
     private UsuarioDTO obterUsuarioDTOPorToken(String token) {
-        return usuarioMapper.toDto(usuarioRepositorio.findUsuarioByToken(token));
+        return usuarioMapper.toDto(usuarioRepositorio.findByToken(token).orElse(null));
     }
 }

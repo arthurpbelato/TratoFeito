@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -40,17 +41,15 @@ public class OfertaRecurso {
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
-    @PutMapping("/{token}")
-    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
-        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
-        OfertaDTO oferta = ofertaServico.atualizar(ofertaDTO);
+    @PutMapping
+    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO, @RequestParam String token){
+        OfertaDTO oferta = ofertaServico.atualizar(ofertaDTO, token);
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
-    @PostMapping("/{token}")
-    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
-        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
-        OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);
+    @PostMapping
+    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @RequestParam String token){
+        OfertaDTO oferta = ofertaServico.salvar(ofertaDTO, token);
         return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }
 
@@ -60,10 +59,9 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/aceitar/{token}")
-    public ResponseEntity<Void> aceitar(@RequestBody OfertaDTO ofertaDTO, @PathVariable("token") String token){
-        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioAlvo(), token);
-        ofertaServico.aceitar(ofertaDTO.getId());
+    @PatchMapping("/aceitar/{id}")
+    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id, @RequestParam String token){
+        ofertaServico.aceitar(id, token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

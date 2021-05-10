@@ -35,6 +35,5 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
     public Optional<Usuario> findByEmail(String email);
 
-    @Query("SELECT u FROM Usuario u WHERE u.token = :token")
-    public Usuario findUsuarioByToken(@Param("token") String token);
+    public Optional<Usuario> findByToken( String token);
 }
