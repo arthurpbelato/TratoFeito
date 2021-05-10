@@ -111,14 +111,15 @@ public class OfertaRecursoIT extends IntTestComum {
                 .andExpect(status().isOk());
     }
 
+
 //    @Test
 //    public void aceitar() throws Exception{
-//
+//    //TODO
 //    }
 //
 //    @Test
 //    public void recusar() throws Exception{
-//
+//    //TODO
 //    }
 
 
