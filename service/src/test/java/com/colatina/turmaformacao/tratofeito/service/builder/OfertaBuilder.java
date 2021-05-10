@@ -2,14 +2,12 @@ package com.colatina.turmaformacao.tratofeito.service.builder;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
-import com.colatina.turmaformacao.tratofeito.service.dominio.Situacao;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.UsuarioServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
@@ -53,27 +51,37 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     @Override
     public Oferta construirEntidade() {
         Oferta oferta = new Oferta();
-        Usuario usuario = usuarioBuilder.construir();
         List <Item> itens = new ArrayList<>();
 
-        itens.add(itemBuilder.customizar(i -> {
-            i.setNome("Item2");
-            i.setDescricao("Item que esta sendo ofertado para o item alvo");
-            i.setUsuario(usuarioBuilder.customizar( u -> {
-                u.setEmail("usuariotroca123@gmail.com");
-                u.setCpf("58043162069");
-            }).construir());
-        }).construir());
+        Usuario usuarioTroca = usuarioBuilder.criarOutroUsuario();
+        usuarioTroca.setEmail("usuarioTROCA1@gmail.com");
+        usuarioTroca.setCpf("58043162069");
+        usuarioTroca = usuarioBuilder.persistir(usuarioTroca);
+        Item itemTroca = itemBuilder.criarNovoItem();
+        itemTroca.setNome("Item TROCA");
+        itemTroca.setUsuario(usuarioTroca);
+        itemTroca = itemBuilder.persistir(itemTroca);
+        itens.add(itemTroca);
 
-        oferta.setItem(itemBuilder.construir());
-        oferta.setUsuario(usuario);
-        oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
+        itemBuilder.removerCustomizacao();
+        usuarioBuilder.removerCustomizacao();
+
+        Usuario usuarioAlvo = usuarioBuilder.criarOutroUsuario();
+        usuarioAlvo.setCpf("32492800032");
+        usuarioAlvo.setEmail("usuarioALVO@gmail.com");
+        usuarioAlvo.setNome("Usuario Alvo");
+        usuarioAlvo = usuarioBuilder.persistir(usuarioAlvo);
+        Item itemAlvo = itemBuilder.criarNovoItem();
+        itemAlvo.setNome("Item ALVO");
+        itemAlvo.setUsuario(usuarioAlvo);
+        itemAlvo = itemBuilder.persistir(itemAlvo);
+        oferta.setUsuario(usuarioAlvo);
+        oferta.setItem(itemAlvo);
+        oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.APROVADA.getId()));
         oferta.setItensOfertados(itens);
 
         return oferta;
     }
-
-
 
     @Override
     public Oferta persistir(Oferta entidade) {

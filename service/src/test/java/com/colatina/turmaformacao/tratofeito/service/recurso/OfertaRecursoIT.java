@@ -6,12 +6,10 @@ import com.colatina.turmaformacao.tratofeito.service.builder.OfertaBuilder;
 import com.colatina.turmaformacao.tratofeito.service.builder.UsuarioBuilder;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
-import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
-import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import com.colatina.turmaformacao.tratofeito.service.util.IntTestComum;
 import com.colatina.turmaformacao.tratofeito.service.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -61,14 +57,12 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @BeforeEach
     public void inicializar(){
-
         usuarioRepositorio.deleteAll();
         itemRepositorio.deleteAll();
         ofertaRepositorio.deleteAll();
         usuarioBuilder.removerCustomizacao();
         itemBuilder.removerCustomizacao();
         ofertaBuilder.removerCustomizacao();
-
     }
 
     @Test
@@ -82,7 +76,7 @@ public class OfertaRecursoIT extends IntTestComum {
 
     @Test
     public void salvar() throws  Exception{
-        Oferta oferta = ofertaBuilder.construir();
+        Oferta oferta = ofertaBuilder.construirEntidade();
         getMockMvc().perform(post("/api/ofertas")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
