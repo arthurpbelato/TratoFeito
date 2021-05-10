@@ -1,10 +1,8 @@
 package com.colatina.turmaformacao.tratofeito.service.builder;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
-import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.CategoriaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

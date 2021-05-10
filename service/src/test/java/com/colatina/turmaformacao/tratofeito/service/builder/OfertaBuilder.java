@@ -5,12 +5,8 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.UsuarioServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
-import com.colatina.turmaformacao.tratofeito.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,22 +26,10 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     private UsuarioBuilder usuarioBuilder;
 
     @Autowired
-    private UsuarioServico usuarioServico;
-
-    @Autowired
-    private UsuarioMapper usuarioMapper;
-
-    @Autowired
-    private ItemMapper itemMapper;
-
-    @Autowired
-    private ItemServico itemServico;
+    private ItemBuilder itemBuilder;
 
     @Autowired
     private SituacaoRepositorio situacaoRepositorio;
-
-    @Autowired
-    private ItemBuilder itemBuilder;
 
 
     @Override
@@ -53,26 +37,14 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         Oferta oferta = new Oferta();
         List <Item> itens = new ArrayList<>();
 
-        Usuario usuarioTroca = usuarioBuilder.criarOutroUsuario();
-        usuarioTroca.setEmail("usuarioTROCA1@gmail.com");
-        usuarioTroca.setCpf("58043162069");
-        usuarioTroca = usuarioBuilder.persistir(usuarioTroca);
-        Item itemTroca = itemBuilder.criarNovoItem();
-        itemTroca.setNome("Item TROCA");
+        Usuario usuarioTroca = criarUsuarioTroca();
+        Item itemTroca = criarItemTroca();
         itemTroca.setUsuario(usuarioTroca);
         itemTroca = itemBuilder.persistir(itemTroca);
         itens.add(itemTroca);
 
-        itemBuilder.removerCustomizacao();
-        usuarioBuilder.removerCustomizacao();
-
-        Usuario usuarioAlvo = usuarioBuilder.criarOutroUsuario();
-        usuarioAlvo.setCpf("32492800032");
-        usuarioAlvo.setEmail("usuarioALVO@gmail.com");
-        usuarioAlvo.setNome("Usuario Alvo");
-        usuarioAlvo = usuarioBuilder.persistir(usuarioAlvo);
-        Item itemAlvo = itemBuilder.criarNovoItem();
-        itemAlvo.setNome("Item ALVO");
+        Usuario usuarioAlvo = criarUsuarioAlvo();
+        Item itemAlvo = criarItemAlvo();
         itemAlvo.setUsuario(usuarioAlvo);
         itemAlvo = itemBuilder.persistir(itemAlvo);
         oferta.setUsuario(usuarioAlvo);
@@ -83,8 +55,49 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         return oferta;
     }
 
+    private Usuario criarUsuarioTroca(){
+
+        Usuario usuario = usuarioBuilder.criarOutroUsuario();
+        usuario.setEmail("usuarioTROCA1@gmail.com");
+        usuario.setCpf("58043162069");
+        usuario = usuarioBuilder.persistir(usuario);
+
+       return usuario;
+    }
+
+    private Item criarItemTroca(){
+        Item item = itemBuilder.criarNovoItem();
+        item.setNome("Item TROCA");
+        item.setDisponibilidade(true);
+        item.setDescricao("Item teste para troca");
+
+        return item;
+    }
+
+    private Usuario criarUsuarioAlvo(){
+
+        Usuario usuario = usuarioBuilder.criarOutroUsuario();
+        usuario.setCpf("32492800032");
+        usuario.setEmail("usuarioALVO@gmail.com");
+        usuario.setNome("Usuario Alvo");
+        usuario = usuarioBuilder.persistir(usuario);
+
+        return usuario;
+    }
+
+    private Item criarItemAlvo(){
+        Item item = itemBuilder.criarNovoItem();
+        item.setNome("Item ALVO");
+        item.setDisponibilidade(true);
+        item.setDescricao("Item teste ALVO");
+
+        return item;
+    }
+
+
     @Override
     public Oferta persistir(Oferta entidade) {
-        return ofertaMapper.toEntity(ofertaServico.salvar(ofertaMapper.toDto(entidade)));
+        return ofertaMapper.toEntity(ofertaServico.salvar
+                (ofertaMapper.toDto(entidade), entidade.getUsuario().getToken()));
     }
 }

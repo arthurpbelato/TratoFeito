@@ -34,6 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class OfertaRecursoIT extends IntTestComum {
 
+    private final String API_URL = "/api/ofertas";
+
     @Autowired
     private OfertaMapper ofertaMapper;
 
@@ -68,7 +70,7 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void listar() throws Exception{
         ofertaBuilder.construir();
-        getMockMvc().perform(get("/api/ofertas")
+        getMockMvc().perform(get(API_URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
@@ -77,7 +79,7 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void salvar() throws  Exception{
         Oferta oferta = ofertaBuilder.construirEntidade();
-        getMockMvc().perform(post("/api/ofertas")
+        getMockMvc().perform(post(API_URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
                 .andExpect(status().isCreated());
@@ -86,7 +88,7 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void obterPorId() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
-        getMockMvc().perform(get( "/api/ofertas" + "/" + oferta.getId().toString())
+        getMockMvc().perform(get( API_URL + "/" + oferta.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
@@ -96,7 +98,7 @@ public class OfertaRecursoIT extends IntTestComum {
         Oferta oferta = ofertaBuilder.construir();
         Item item = itemBuilder.criarNovoItem();
         oferta.setItem(item);
-        getMockMvc().perform(put("/api/ofertas")
+        getMockMvc().perform(put(API_URL)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(ofertaMapper.toDto(oferta))))
                 .andExpect(status().isOk());
@@ -105,8 +107,8 @@ public class OfertaRecursoIT extends IntTestComum {
     @Test
     public void excluir() throws  Exception{
         Oferta oferta = ofertaBuilder.construir();
-        getMockMvc().perform(delete("/api/ofertas" + "/"
-                + oferta.getId().toString())
+        getMockMvc().perform(delete(API_URL + "/"
+                + oferta.getId())
                 .contentType(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
