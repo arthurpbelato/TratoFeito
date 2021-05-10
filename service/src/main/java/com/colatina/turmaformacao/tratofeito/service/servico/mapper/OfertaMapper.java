@@ -17,7 +17,7 @@ public interface OfertaMapper extends EntityMapper<OfertaDTO, Oferta>{
 
 
     @Mapping(source = "item.id", target = "idItemAlvo")
-    @Mapping(source = "usuario.id", target = "idUsuario")
+    @Mapping(source = "usuario.id", target = "idUsuarioAlvo")
     OfertaDTO toDto(Oferta entity);
 
     @InheritInverseConfiguration
@@ -31,8 +31,9 @@ public interface OfertaMapper extends EntityMapper<OfertaDTO, Oferta>{
     }
 
     @AfterMapping
-    default void mapItemListDTO(Oferta oferta,@MappingTarget  OfertaDTO ofertaDTO){
+    default void mapItemListDTO(Oferta oferta, @MappingTarget OfertaDTO ofertaDTO){
         List<Item> itens = oferta.getItensOfertados();
+        ofertaDTO.setIdUsuarioOfertante(itens.get(0).getUsuario().getId());
         List<Long> ids = itens.stream().map(Item::getId).collect(Collectors.toList());
         ofertaDTO.setIdItensOfertados(ids);
     }
