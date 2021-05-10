@@ -1,6 +1,5 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
-import com.colatina.turmaformacao.tratofeito.service.seguranca.Autenticacao;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
@@ -26,8 +25,6 @@ import java.util.List;
 public class OfertaRecurso {
 
     private final OfertaServico ofertaServico;
-
-    private final Autenticacao autenticacao;
 
     @GetMapping
     public ResponseEntity<List<OfertaListagemDTO>> listar(){
