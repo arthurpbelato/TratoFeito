@@ -31,7 +31,7 @@ public interface OfertaMapper extends EntityMapper<OfertaDTO, Oferta>{
     }
 
     @AfterMapping
-    default void mapItemListDTO(Oferta oferta,@MappingTarget  OfertaDTO ofertaDTO){
+    default void mapItemListDTO(Oferta oferta, @MappingTarget OfertaDTO ofertaDTO){
         List<Item> itens = oferta.getItensOfertados();
         ofertaDTO.setIdUsuarioOfertante(itens.get(0).getUsuario().getId());
         List<Long> ids = itens.stream().map(Item::getId).collect(Collectors.toList());
