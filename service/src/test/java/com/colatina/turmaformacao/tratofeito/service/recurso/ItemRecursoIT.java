@@ -29,8 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {ServiceApplication.class})
 @Transactional
-public class
-ItemRecursoIT extends IntTestComum {
+public class ItemRecursoIT extends IntTestComum {
 
     private final String URL = "/api/itens";
 
