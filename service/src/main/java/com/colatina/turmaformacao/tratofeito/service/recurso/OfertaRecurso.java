@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,14 +39,14 @@ public class OfertaRecurso {
     }
 
     @PutMapping
-    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO){
-        OfertaDTO oferta = ofertaServico.atualizar(ofertaDTO);
+    public ResponseEntity<OfertaDTO> atualizar(@RequestBody OfertaDTO ofertaDTO, @RequestParam String token){
+        OfertaDTO oferta = ofertaServico.atualizar(ofertaDTO, token);
         return new ResponseEntity<>(oferta, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO){
-        OfertaDTO oferta = ofertaServico.salvar(ofertaDTO);
+    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @RequestParam String token){
+        OfertaDTO oferta = ofertaServico.salvar(ofertaDTO, token);
         return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }
 
@@ -55,15 +56,16 @@ public class OfertaRecurso {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("aceitar/{id}")
-    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id){
-        ofertaServico.aceitar(id);
+    @PatchMapping("/aceitar/{id}")
+    public ResponseEntity<Void> aceitar(@PathVariable("id") Long id, @RequestParam String token){
+        ofertaServico.aceitar(id, token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("recusar/{id}")
+    @PatchMapping("/recusar/{id}")
     public ResponseEntity<Void> recusar(@PathVariable("id") Long id){
         ofertaServico.recusar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

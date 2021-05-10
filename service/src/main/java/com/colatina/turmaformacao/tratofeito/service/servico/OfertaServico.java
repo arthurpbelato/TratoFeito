@@ -5,6 +5,7 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.seguranca.Autenticacao;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
@@ -31,6 +32,7 @@ public class OfertaServico {
     private final ItemServico itemServico;
     private final SituacaoServico situacaoServico;
     private final ItemMapper itemMapper;
+    private final Autenticacao autenticacao;
 
     private Oferta getOferta(Long id){
         return ofertaRepositorio.findOfertaById(id);
@@ -45,13 +47,15 @@ public class OfertaServico {
         return ofertaMapper.toDto(oferta);
     }
 
-    public OfertaDTO atualizar(OfertaDTO ofertaDTO){
+    public OfertaDTO atualizar(OfertaDTO ofertaDTO, String token){
+        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         ofertaRepositorio.save(oferta);
         return ofertaMapper.toDto(oferta);
     }
 
-    public OfertaDTO salvar(OfertaDTO ofertaDTO){
+    public OfertaDTO salvar(OfertaDTO ofertaDTO, String token){
+        autenticacao.validarUsuario(ofertaDTO.getIdUsuarioOfertante(), token);
         itemIndisponivel(ofertaDTO);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
@@ -77,10 +81,12 @@ public class OfertaServico {
         ofertaRepositorio.deleteById(id);
     }
 
+    public void aceitar(Long id, String token) {
 
-    public void aceitar(Long id) {
         Oferta oferta = ofertaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
+        autenticacao.validarUsuario(ofertaMapper.toDto(oferta).getIdUsuarioAlvo(), token);
+
         oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.APROVADA.getId()));
 
         atualizarItensOfertados(oferta);
