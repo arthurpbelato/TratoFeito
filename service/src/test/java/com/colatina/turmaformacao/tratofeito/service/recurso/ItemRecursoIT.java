@@ -3,7 +3,6 @@ package com.colatina.turmaformacao.tratofeito.service.recurso;
 import com.colatina.turmaformacao.tratofeito.service.ServiceApplication;
 import com.colatina.turmaformacao.tratofeito.service.builder.ItemBuilder;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.CategoriaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import com.colatina.turmaformacao.tratofeito.service.util.IntTestComum;
@@ -18,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
