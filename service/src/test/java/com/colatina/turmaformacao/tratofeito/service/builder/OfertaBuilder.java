@@ -4,8 +4,11 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
+import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +34,13 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     @Autowired
     private SituacaoRepositorio situacaoRepositorio;
 
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private OfertaRepositorio ofertaRepositorio;
+
+
 
     @Override
     public Oferta construirEntidade() {
@@ -38,16 +48,14 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         List <Item> itens = new ArrayList<>();
 
         Usuario usuarioTroca = criarUsuarioTroca();
-        Item itemTroca = criarItemTroca();
-        itemTroca.setUsuario(usuarioTroca);
-        itemTroca = itemBuilder.persistir(itemTroca);
+        Item itemTroca = criarItemTroca(usuarioTroca);
+
         itens.add(itemTroca);
 
         Usuario usuarioAlvo = criarUsuarioAlvo();
-        Item itemAlvo = criarItemAlvo();
-        itemAlvo.setUsuario(usuarioAlvo);
-        itemAlvo = itemBuilder.persistir(itemAlvo);
-        oferta.setUsuario(usuarioAlvo);
+        Item itemAlvo = criarItemAlvo(usuarioAlvo);
+
+        oferta.setUsuario(usuarioTroca);
         oferta.setItem(itemAlvo);
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.APROVADA.getId()));
         oferta.setItensOfertados(itens);
@@ -65,11 +73,13 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
        return usuario;
     }
 
-    private Item criarItemTroca(){
+    private Item criarItemTroca(Usuario usuario){
         Item item = itemBuilder.criarNovoItem();
         item.setNome("Item TROCA");
         item.setDisponibilidade(true);
         item.setDescricao("Item teste para troca");
+        item.setUsuario(usuario);
+        item = itemBuilder.persistir(item);
 
         return item;
     }
@@ -85,11 +95,13 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         return usuario;
     }
 
-    private Item criarItemAlvo(){
+    private Item criarItemAlvo(Usuario usuario){
         Item item = itemBuilder.criarNovoItem();
         item.setNome("Item ALVO");
         item.setDisponibilidade(true);
         item.setDescricao("Item teste ALVO");
+        item.setUsuario(usuario);
+        item = itemBuilder.persistir(item);
 
         return item;
     }
@@ -98,6 +110,7 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     @Override
     public Oferta persistir(Oferta entidade) {
         return ofertaMapper.toEntity(ofertaServico.salvar
-                (ofertaMapper.toDto(entidade), entidade.getUsuario().getToken()));
+                (ofertaMapper.toDto(entidade), ""));
+//        return ofertaRepositorio.saveAndFlush(entidade);
     }
 }

@@ -2,9 +2,12 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
+import com.colatina.turmaformacao.tratofeito.service.dominio.Situacao;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.seguranca.Autenticacao;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO;
@@ -33,6 +36,8 @@ public class OfertaServico {
     private final SituacaoServico situacaoServico;
     private final ItemMapper itemMapper;
     private final Autenticacao autenticacao;
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final ItemRepositorio itemRepositorio;
 
     private Oferta getOferta(Long id){
         return ofertaRepositorio.findOfertaById(id);
@@ -59,7 +64,7 @@ public class OfertaServico {
         itemIndisponivel(ofertaDTO);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
-        ofertaRepositorio.save(oferta);
+        ofertaRepositorio.saveAndFlush(oferta);
         EmailItemOfertaDTO ofertaEmail = ofertaRepositorio.findItemEmailAlvo(oferta.getId());
         emailServico.sendMail(criarEmailNovaOferta(ofertaEmail));
         return ofertaMapper.toDto(oferta);
@@ -85,9 +90,10 @@ public class OfertaServico {
 
         Oferta oferta = ofertaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
-        autenticacao.validarUsuario(ofertaMapper.toDto(oferta).getIdUsuarioAlvo(), token);
+        ItemDTO itemDTO = itemServico.obterPorId(oferta.getItem().getId());
+        autenticacao.validarUsuario(itemDTO.getIdUsuario(), token);
 
-        oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.APROVADA.getId()));
+        oferta.setSituacao(new Situacao(2L));
 
         atualizarItensOfertados(oferta);
         atualizarItemAlvo(oferta);
@@ -110,16 +116,19 @@ public class OfertaServico {
 
     private void atualizarItensOfertados(Oferta oferta){
         List<Item> itensOfertados = oferta.getItensOfertados();
-        Usuario alvo = new Usuario(oferta.getItem().getUsuario().getId());
-        itensOfertados.forEach(item -> {
-            item.setUsuario(alvo);
-            item.setDisponibilidade(false);
+        Item item = itemRepositorio.findById(oferta.getItem().getId())
+                .orElseThrow(() -> new RegraNegocioException("Item nao encontrado"));
+        Usuario alvo = new Usuario(item.getUsuario().getId());
+        itensOfertados.forEach(i -> {
+            i.setUsuario(alvo);
+            i.setDisponibilidade(false);
         });
         itemServico.salvarLista(itensOfertados);
     }
 
     private void cancelarOfertasParalelas(Oferta oferta){
-        List<Long> idsItems = oferta.getItensOfertados().stream().map(Item::getId).collect(Collectors.toList());
+        List<Long> idsItems = oferta.getItensOfertados().stream().map(Item::getId)
+                .collect(Collectors.toList());
 
         List<Oferta> ofertasItemTrocado = ofertaRepositorio
                 .obterOfertasComItemAlvoTrocado(oferta.getItem().getId(),
@@ -138,6 +147,7 @@ public class OfertaServico {
         Oferta oferta = ofertaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Oferta não encontrada"));
         EmailItemOfertaDTO ofertaEmail = ofertaRepositorio.findItemEmailOfertante(id);
+
         emailServico.sendMail(criarEmailRecusarOferta(ofertaEmail));
         oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.RECUSADA.getId()));
     }
