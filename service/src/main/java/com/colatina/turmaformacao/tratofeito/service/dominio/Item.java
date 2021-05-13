@@ -52,7 +52,7 @@ public class Item implements Serializable {
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 

@@ -45,7 +45,7 @@ public class ItemServico {
 
     public ItemDTO alterar(ItemDTO itemDTO) {
         Item item = itemMapper.toEntity(itemDTO);
-        itemRepositorio.saveAndFlush(item);
+        itemRepositorio.save(item);
         return itemMapper.toDto(item);
     }
 

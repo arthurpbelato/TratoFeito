@@ -10,7 +10,6 @@ import java.util.List;
 public class OfertaDTO {
     private Long id;
     private Long idItemAlvo;
-//    private Long idUsuarioAlvo;
     private Long idUsuarioOfertante;
     private List<Long> idItensOfertados;
 }

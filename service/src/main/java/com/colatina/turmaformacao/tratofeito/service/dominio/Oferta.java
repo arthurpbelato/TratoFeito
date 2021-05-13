@@ -33,7 +33,7 @@ public class Oferta implements Serializable{
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_item")
     private Item item;
 

@@ -12,8 +12,7 @@ public interface ItemListagemMapper extends EntityMapper<ItemListagemDTO, Item>{
     @Mapping(source = "categoria.descricao", target = "descricaoCategoria")
     ItemListagemDTO toDto(Item entity);
 
-    @Mapping(source = "idUsuario", target = "usuario.id")
-    @Mapping(source = "descricaoCategoria", target = "categoria.descricao")
+    @InheritInverseConfiguration
     Item toEntity(ItemListagemDTO dto);
 
 }

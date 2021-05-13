@@ -64,7 +64,7 @@ public class OfertaServico {
         itemIndisponivel(ofertaDTO);
         Oferta oferta = ofertaMapper.toEntity(ofertaDTO);
         oferta.setSituacao(situacaoServico.getSituacao(SituacaoEnum.AGUARDANDO_APROVACAO.getId()));
-        ofertaRepositorio.saveAndFlush(oferta);
+        ofertaRepositorio.save(oferta);
         EmailItemOfertaDTO ofertaEmail = ofertaRepositorio.findItemEmailAlvo(oferta.getId());
         emailServico.sendMail(criarEmailNovaOferta(ofertaEmail));
         return ofertaMapper.toDto(oferta);
