@@ -119,15 +119,6 @@ public class OfertaRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void aceitar() throws Exception{
-        Oferta oferta = ofertaBuilder.construir();
-        getMockMvc().perform(patch(API_URL + "/aceitar/"
-                + oferta.getId() + "?token=123")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isNoContent());
-    }
-
-    @Test
     public void recusar() throws Exception{
         Oferta oferta = ofertaBuilder.construir();
         getMockMvc().perform(patch(API_URL + "/recusar/" + oferta.getId())
