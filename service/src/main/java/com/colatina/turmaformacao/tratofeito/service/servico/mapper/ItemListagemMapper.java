@@ -2,6 +2,7 @@ package com.colatina.turmaformacao.tratofeito.service.servico.mapper;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

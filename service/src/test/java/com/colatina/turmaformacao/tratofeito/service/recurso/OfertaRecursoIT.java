@@ -44,9 +44,6 @@ public class OfertaRecursoIT extends IntTestComum {
     private OfertaMapper ofertaMapper;
 
     @Autowired
-    private UsuarioMapper usuarioMapper;
-
-    @Autowired
     private OfertaRepositorio ofertaRepositorio;
 
     @Autowired
