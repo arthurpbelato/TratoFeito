@@ -5,7 +5,8 @@ import { LoginSuccessComponent } from '@nuvem/angular-base';
 
 const routes: Routes = [
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
-    { path: 'login-success', component: LoginSuccessComponent }
+    { path: 'login-success', component: LoginSuccessComponent },
+    { path: 'usuarios', loadChildren: () => import('./usuario/usuario.module').then(m => m.UsuarioModule)}
 ];
 
 @NgModule({

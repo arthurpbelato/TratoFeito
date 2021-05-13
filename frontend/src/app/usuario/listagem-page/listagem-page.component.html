@@ -1,0 +1,54 @@
+<h3 class="first">Usuários</h3>
+
+<p-dialog header="Cadastro de Usuário" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw', 'height':'80vh'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" >
+
+    <form [formGroup]="form">
+        <div class="ui-fluid">
+            <div class="p-field">
+                <label for="nome">Nome</label>
+                <input formControlName="nome" id="nome" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input formControlName="email" id="email" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="cpf">CPF</label>
+                <p-inputMask formControlName="cpf" mask="999.999.999-99"></p-inputMask>
+            </div>
+            <div class="p-field">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <p-calendar formControlName="dataNascimento"></p-calendar>
+            </div>
+        </div>
+    </form>
+
+    <p-footer>
+        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="displayModal=false" label="Fechar"
+            class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+<button pButton type="button" label="Novo Usuário" class="ui-button-success" (click)="abrirModal()"></button>
+<p-table [value]="usuarios">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Data de Nascimento</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-u>
+        <tr>
+            <td>{{u.id}}</td>
+            <td>{{u.nome}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.dataNascimento}}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
