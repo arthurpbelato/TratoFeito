@@ -10,7 +10,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     layoutCompact = true;
 
-    darkMenu = false;
+    darkMenu = true;
 
     profileMode = 'inline';
 

@@ -1,9 +1,21 @@
-<h3 class="first">Usuários</h3>
 
-<p-dialog header="Cadastro de Usuário" [(visible)]="displayModal" [modal]="true" [style]="{width: '80vw', 'height':'80vh'}"
-    [baseZIndex]="10000" [draggable]="false" [resizable]="false" >
 
-    <form [formGroup]="form">
+<!-- [ngStyle]="{'float': 'right'}" -->
+
+<div class="p-grid p-justify-between">
+    <div class="p-col-2">
+        <h1 class="first">Usuários</h1>
+    </div>
+    <div class="p-col-2">
+        <button pButton [ngStyle]="{'float': 'right', 'margin-top': '20px'}" type="button" label="Novo Usuário" class="ui-button-success" (click)="abrirModal()"></button>
+    </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="salvar()">
+    <p-dialog [header]="!this.isEdit ? 'Cadastro de Usuário' : 'Atualização de Usuário'" [(visible)]="displayModal" [modal]="true"
+        [style]="{width: '80vw', 'height':'80vh'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false"
+        (onHide)="fecharModal()">
+
         <div class="ui-fluid">
             <div class="p-field">
                 <label for="nome">Nome</label>
@@ -15,23 +27,23 @@
             </div>
             <div class="p-field">
                 <label for="cpf">CPF</label>
-                <p-inputMask formControlName="cpf" mask="999.999.999-99"></p-inputMask>
+                <p-inputMask formControlName="cpf" mask="999.999.999-99" [unmask]=true></p-inputMask>
             </div>
-            <div class="p-field">
+            <div clp-dialogass="p-field">
                 <label for="dataNascimento">Data de Nascimento</label>
                 <p-calendar formControlName="dataNascimento"></p-calendar>
             </div>
         </div>
-    </form>
 
-    <p-footer>
-        <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar"></button>
-        <button type="button" pButton icon="pi pi-times" (click)="displayModal=false" label="Fechar"
-            class="ui-button-secondary"></button>
-    </p-footer>
-</p-dialog>
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar" [disabled]="form.invalid || submit"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar"
+                class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+</form>
 
-<button pButton type="button" label="Novo Usuário" class="ui-button-success" (click)="abrirModal()"></button>
+
 <p-table [value]="usuarios">
     <ng-template pTemplate="header">
         <tr>
@@ -39,6 +51,7 @@
             <th>Nome</th>
             <th>Email</th>
             <th>Data de Nascimento</th>
+            <th>Ações</th>
         </tr>
     </ng-template>
 
@@ -48,6 +61,13 @@
             <td>{{u.nome}}</td>
             <td>{{u.email}}</td>
             <td>{{u.dataNascimento}}</td>
+            <td>
+                <button pButton type="button" label="Editar" class="ui-button-warning" 
+                 (click)="editarUsuario(u.id)" ></button>
+                
+                <button pButton type="button" label="Excluir" class="ui-button-danger" 
+                 (click)="excluirUsuario(u.id)"  [ngStyle]="{'float': 'right'}"></button>     
+            </td>
         </tr>
     </ng-template>
 

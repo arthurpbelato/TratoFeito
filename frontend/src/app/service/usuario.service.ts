@@ -28,4 +28,8 @@ export class UsuarioService {
   excluir(id){
     return this.http.delete(`api/usuarios/${id}`);
   }
+
+  buscarPorId(id){
+    return this.http.get<any>(`api/usuarios/${id}`);
+  }
 }
