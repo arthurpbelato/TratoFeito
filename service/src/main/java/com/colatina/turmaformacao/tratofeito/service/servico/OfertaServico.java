@@ -7,7 +7,6 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.seguranca.Autenticacao;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO;
@@ -36,7 +35,6 @@ public class OfertaServico {
     private final SituacaoServico situacaoServico;
     private final ItemMapper itemMapper;
     private final Autenticacao autenticacao;
-    private final UsuarioRepositorio usuarioRepositorio;
     private final ItemRepositorio itemRepositorio;
 
     private Oferta getOferta(Long id){

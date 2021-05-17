@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -41,16 +42,12 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     private OfertaRepositorio ofertaRepositorio;
 
 
-
     @Override
     public Oferta construirEntidade() {
         Oferta oferta = new Oferta();
-        List <Item> itens = new ArrayList<>();
 
         Usuario usuarioTroca = criarUsuarioTroca();
         Item itemTroca = criarItemTroca(usuarioTroca);
-
-        itens.add(itemTroca);
 
         Usuario usuarioAlvo = criarUsuarioAlvo();
         Item itemAlvo = criarItemAlvo(usuarioAlvo);
@@ -58,7 +55,7 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         oferta.setUsuario(usuarioTroca);
         oferta.setItem(itemAlvo);
         oferta.setSituacao(situacaoRepositorio.getOne(SituacaoEnum.APROVADA.getId()));
-        oferta.setItensOfertados(itens);
+        oferta.setItensOfertados(Collections.singletonList(itemTroca));
 
         return oferta;
     }
@@ -68,9 +65,8 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         Usuario usuario = usuarioBuilder.criarOutroUsuario();
         usuario.setEmail("usuarioTROCA1@gmail.com");
         usuario.setCpf("58043162069");
-        usuario = usuarioBuilder.persistir(usuario);
 
-       return usuario;
+       return usuarioBuilder.persistir(usuario);
     }
 
     private Item criarItemTroca(Usuario usuario){
@@ -79,9 +75,8 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         item.setDisponibilidade(true);
         item.setDescricao("Item teste para troca");
         item.setUsuario(usuario);
-        item = itemBuilder.persistir(item);
 
-        return item;
+        return itemBuilder.persistir(item);
     }
 
     private Usuario criarUsuarioAlvo(){
@@ -90,9 +85,8 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         usuario.setCpf("32492800032");
         usuario.setEmail("usuarioALVO@gmail.com");
         usuario.setNome("Usuario Alvo");
-        usuario = usuarioBuilder.persistir(usuario);
 
-        return usuario;
+        return usuarioBuilder.persistir(usuario);
     }
 
     private Item criarItemAlvo(Usuario usuario){
@@ -101,9 +95,8 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         item.setDisponibilidade(true);
         item.setDescricao("Item teste ALVO");
         item.setUsuario(usuario);
-        item = itemBuilder.persistir(item);
 
-        return item;
+        return itemBuilder.persistir(item);
     }
 
 
@@ -111,6 +104,5 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
     public Oferta persistir(Oferta entidade) {
         return ofertaMapper.toEntity(ofertaServico.salvar
                 (ofertaMapper.toDto(entidade), ""));
-//        return ofertaRepositorio.saveAndFlush(entidade);
     }
 }
