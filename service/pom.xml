@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.colatina.turmaformacao.tratofeito</groupId>
 	<artifactId>service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>service</name>
 	<description>Sistema Gerenciador de Trocas</description>
 	<properties>
