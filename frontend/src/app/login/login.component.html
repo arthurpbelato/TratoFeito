@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+    <div class="ui-fluid">
+        <div class="p-field">
+            <label for="email">Email</label>
+            <input id="email" type="text" formControlName='email' pInputText>
+        </div>
+        <div class="p-field">
+            <label for="token">Token</label>
+            <input id="token" type="text" formControlName='token' pInputText>
+        </div>
+    </div>
+
+    <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar"
+        [disabled]="form.invalid || submit"></button>
+</form>
