@@ -31,7 +31,7 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setSituacao("OK");
         entidade.setFoto(new byte[50]);
         entidade.setUsuario(usuarioBuilder.construir());
-        entidade.setCategoria(categoriaRepositorio.findById(1L).orElse(null));
+        entidade.setCategoria(categoriaRepositorio.getOne(CategoriaEnum.COLECIONAVEL.getId()));
         return entidade;
 
     }
@@ -43,7 +43,7 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setFoto(new byte[20]);
         entidade.setDisponibilidade(true);
         entidade.setSituacao("Item inserido e alterado para teste.");
-        entidade.setCategoria(categoriaRepositorio.findById(5L).orElse(null));
+        entidade.setCategoria(categoriaRepositorio.getOne(CategoriaEnum.ARTESANAL.getId()));
         return entidade;
 
     }
