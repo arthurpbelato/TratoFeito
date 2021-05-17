@@ -8,14 +8,11 @@ import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositor
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
