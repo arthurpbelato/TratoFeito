@@ -4,9 +4,7 @@ import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Oferta;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.dominio.enums.SituacaoEnum;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.OfertaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.SituacaoRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +29,6 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
 
     @Autowired
     private SituacaoRepositorio situacaoRepositorio;
-
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
-
-    @Autowired
-    private OfertaRepositorio ofertaRepositorio;
 
 
     @Override
@@ -63,7 +55,7 @@ public class OfertaBuilder extends ConstrutorEntidade<Oferta>{
         usuario.setEmail("usuarioTROCA1@gmail.com");
         usuario.setCpf("58043162069");
 
-       return usuarioBuilder.persistir(usuario);
+        return usuarioBuilder.persistir(usuario);
     }
 
     private Item criarItemTroca(Usuario usuario){
