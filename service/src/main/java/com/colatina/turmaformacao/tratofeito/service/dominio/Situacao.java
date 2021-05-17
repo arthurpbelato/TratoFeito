@@ -25,4 +25,8 @@ public class Situacao implements Serializable {
 
     @Column(name = "descricao")
     private String descricao;
+
+    public Situacao(Long id) {
+        this.id = id;
+    }
 }

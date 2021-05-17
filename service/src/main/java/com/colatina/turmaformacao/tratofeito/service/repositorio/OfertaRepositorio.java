@@ -30,12 +30,14 @@ public interface OfertaRepositorio extends JpaRepository<Oferta, Long> {
     @Query("Select o From Oferta o Where id= :id")
     Oferta findOfertaById(@Param("id") Long id);
 
-    @Query("SELECT NEW com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO(i.nome, u.email) from Oferta o join o.item i join i.usuario u where o.id = :id")
-    EmailItemOfertaDTO findItemEmailAlvo(Long id);
+    @Query("SELECT " +
+            "NEW com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO(" +
+            "i.nome, u.email) from Oferta o join o.item i join i.usuario u where o.id = :id")
+    EmailItemOfertaDTO findItemEmailAlvo(@Param("id") Long id);
 
     @Query("SELECT NEW " +
-            "com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO(i.nome, " +
-            "u.email) " +
+            "com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO" +
+            "(i.nome, " + "u.email) " +
             "from Oferta o join o.item i join o.usuario u where o.id = :id")
-    EmailItemOfertaDTO findItemEmailOfertante(Long id);
+    EmailItemOfertaDTO findItemEmailOfertante(@Param("id") Long id);
 }

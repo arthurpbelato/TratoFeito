@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioDTO {
+
     private Long id;
 
     @NotNull(message = "Campo nome não pode ser null")

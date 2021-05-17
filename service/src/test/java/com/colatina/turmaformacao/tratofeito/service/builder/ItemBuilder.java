@@ -1,9 +1,9 @@
 package com.colatina.turmaformacao.tratofeito.service.builder;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
+import com.colatina.turmaformacao.tratofeito.service.dominio.enums.CategoriaEnum;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.CategoriaRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,8 +32,9 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setSituacao("OK");
         entidade.setFoto(new byte[50]);
         entidade.setUsuario(usuarioBuilder.construir());
-        entidade.setCategoria(categoriaRepositorio.findById(1L).orElse(null));
+        entidade.setCategoria(categoriaRepositorio.getOne(CategoriaEnum.COLECIONAVEL.getId()));
         return entidade;
+
     }
 
     public Item criarNovoItem() {
@@ -41,16 +42,16 @@ public class ItemBuilder extends ConstrutorEntidade<Item> {
         entidade.setNome("item-teste-alterado");
         entidade.setDescricao("Item inserido e alterado para teste.");
         entidade.setFoto(new byte[20]);
-        entidade.setDisponibilidade(false);
+        entidade.setDisponibilidade(true);
         entidade.setSituacao("Item inserido e alterado para teste.");
-        entidade.setCategoria(categoriaRepositorio.findById(2L).orElse(null));
+        entidade.setCategoria(categoriaRepositorio.getOne(CategoriaEnum.ARTESANAL.getId()));
         return entidade;
+
     }
 
     @Override
     public Item persistir(Item entidade) {
-        ItemDTO entidadeSalva = itemServico.salvar(itemMapper.toDto(entidade));
-        return itemMapper.toEntity(entidadeSalva);
+        return itemMapper.toEntity(itemServico.salvar(itemMapper.toDto(entidade)));
     }
 
 }
