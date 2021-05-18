@@ -11,7 +11,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
   layoutCompact = true;
 
-  darkMenu = true;
+  darkMenu = false;
 
   profileMode = 'inline';
 
@@ -52,7 +52,7 @@ export class AdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.menuService.itens = [
           { label: 'Dashboard', icon: 'dashboard', routerLink: ['./'] },
-          { label: 'Usuarios', icon: 'person', routerLink: ['./usuarios']}
+          { label: 'Usuarios', icon: 'person', routerLink: ['./perfil']}
       ];
   }
 

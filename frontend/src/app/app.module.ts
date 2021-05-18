@@ -1,3 +1,4 @@
+import { CadastroPageComponent } from './cadastro-page/cadastro-page.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,12 +17,14 @@ import { DiarioErrosComponent } from './components/diario-erros/diario-erros.com
 import { BlockUIModule } from 'ng-block-ui';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
     declarations: [
         AppComponent,
         DiarioErrosComponent,
-        LoginComponent
+        LoginComponent,
+        CadastroPageComponent
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -39,7 +42,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         ErrorModule,
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
-        MenuModule
+        MenuModule,
+        CardModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

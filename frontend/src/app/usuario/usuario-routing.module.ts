@@ -4,7 +4,7 @@ import { ListagemPageComponent } from './listagem-page/listagem-page.component';
 
 
 const routes: Routes = [
-  { path: '', component:  ListagemPageComponent}
+  { path: '', component:  ListagemPageComponent},
 ];
 
 @NgModule({
