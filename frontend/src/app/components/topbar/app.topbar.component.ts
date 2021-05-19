@@ -1,3 +1,4 @@
+import { AuthService } from './../../service/auth.service';
 import { Router } from '@angular/router';
 import { UsuarioModel } from './../../usuario/models/usuario.model';
 import { Component } from '@angular/core';
@@ -13,7 +14,8 @@ export class AppTopbarComponent {
     
     constructor(public app: AdminComponent, 
         private readonly _authentication: Authentication<User>,
-        private router: Router) {
+        private router: Router,
+        private authService: AuthService) {
     }
 
     get usuario() {
@@ -22,14 +24,6 @@ export class AppTopbarComponent {
 
     isAuthenticated() {
         return this._authentication.isAuthenticated();
-    }
-
-    get usuarioLogado(){
-        const usuario = JSON.parse(localStorage.getItem('usuario')) as UsuarioModel;
-        if(usuario){
-            return usuario;
-        }
-        return new UsuarioModel(0,"");
     }
 
     logout(){

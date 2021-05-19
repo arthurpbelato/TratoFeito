@@ -9,10 +9,5 @@ export class UsuarioModel{
         nome?: string,
         cpf?: string,
         dataNascimento?: Date
-    ){
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-    }
+    ){}
 }

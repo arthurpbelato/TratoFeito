@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { UsuarioModel } from './../usuario/models/usuario.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -8,7 +10,7 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials){
-    return this.http.post<any>(`api/login`, credentials);
+  login(credentials): Observable<UsuarioModel>{
+    return this.http.post<UsuarioModel>(`api/login`, credentials);
   }
 }

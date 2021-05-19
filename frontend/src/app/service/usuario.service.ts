@@ -1,3 +1,5 @@
+import { UsuarioModel } from './../usuario/models/usuario.model';
+import { Observable } from 'rxjs';
 import { environment } from './../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,29 +9,32 @@ import { Injectable } from '@angular/core';
 })
 export class UsuarioService {
 
-  private api = `${environment.apiUrl}/usuarios`;
+  private api = `api/usuarios`;
 
   constructor(private http: HttpClient) { 
     
   }
 
-  buscarTodos(){
-    return this.http.get<any[]>(`api/usuarios`);
+  buscarTodos(): Observable<UsuarioModel[]>{
+    return this.http.get<UsuarioModel[]>(this.api);
   }
 
-  salvar(usuario){
-    return this.http.post(`api/usuarios`, usuario);
+  salvar(usuario): Observable<UsuarioModel>{
+    return this.http.post(this.api, usuario);
   }
 
-  atualizar(usuario){
-    return this.http.put(`api/usuarios`, usuario);
+  atualizar(usuario): Observable<UsuarioModel>{
+    return this.http.put(this.api, usuario);
   }
 
-  excluir(id){
-    return this.http.delete(`api/usuarios/${id}`);
+  excluir(id): Observable<UsuarioModel>{
+    return this.http.delete(`${this.api}/${id}`);
   }
 
-  buscarPorId(id){
-    return this.http.get<any>(`api/usuarios/${id}`);
+  buscarPorId(id): Observable<UsuarioModel>{
+    return this.http.get<UsuarioModel>(`${this.api}/${id}`);
   }
+
+
+
 }

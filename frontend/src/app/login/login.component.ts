@@ -1,3 +1,4 @@
+import { AuthService } from './../service/auth.service';
 import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
               private loginService: LoginService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.iniciarForm();
@@ -37,9 +39,7 @@ export class LoginComponent implements OnInit {
       })
     ).subscribe(
       (data) => {
-        console.log(data);
-        localStorage.setItem('token', this.form.get('token').value);
-        localStorage.setItem('usuario', JSON.stringify(data));
+        this.authService.guardarDadosLogin(this.form.get('token'), data);
         this.router.navigate(['admin'])
       }
     )

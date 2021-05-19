@@ -1,8 +1,9 @@
+import { AuthService } from './../../service/auth.service';
 import { finalize } from 'rxjs/operators';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsuarioService } from './../../service/usuario.service';
-import { UsuarioModel } from './../models/usuario.model';
+import { UsuarioService } from '../../service/usuario.service';
+import { UsuarioModel } from '../models/usuario.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -18,26 +19,17 @@ export class ProfilePageComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
     private fb: FormBuilder,
-    private notification: PageNotificationService) {
+    private notification: PageNotificationService,
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.iniciarForm();
     this.form.patchValue({
-      ...this.usuarioLogado,
-      dataNascimento: new Date(this.usuarioLogado.dataNascimento)
-    });
-    console.log(this.usuarioLogado.dataNascimento.getUTCDate);
-    
+      ...this.authService.usuarioLogado,
+      dataNascimento: new Date(this.authService.usuarioLogado.dataNascimento)
+    });    
   }
-
-  get usuarioLogado(){
-    const usuario = JSON.parse(localStorage.getItem('usuario')) as UsuarioModel;
-    if(usuario){
-        return usuario;
-    }
-    return new UsuarioModel(0,"");
-}
 
 salvar() {
     this.usuarioService.atualizar(this.form.value).pipe(
@@ -47,8 +39,7 @@ salvar() {
     ).subscribe(
       (usuario) => {
         this.notification.addSuccessMessage('Usuário atualizado com sucesso.');
-        console.log("alterando");
-        localStorage.setItem('usuario', JSON.stringify(usuario));
+        
       },
       () => {
         this.notification.addErrorMessage('Falha ao atualizar usuário.');

@@ -12,12 +12,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastroPageComponent implements OnInit {
 
-  
+
   usuarios: any[] = [];
   displayModal: boolean = false;
   form: FormGroup;
   submit: boolean = false;
-  isEdit: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private fb: FormBuilder,
@@ -31,38 +30,20 @@ export class CadastroPageComponent implements OnInit {
 
 
   salvar() {
-    if (this.isEdit) {
-      this.usuarioService.atualizar(this.form.value).pipe(
-        finalize(() => {
-          this.submit = false;
-        })
-      ).subscribe(
-        () => {
-          this.notification.addSuccessMessage('Usuário atualizado com sucesso.');
-        },
-        () => {
-          this.notification.addErrorMessage('Falha ao atualizar usuário.');
-        }
-      );
-    } else {
-      this.submit = true;
-      this.usuarioService.salvar(this.form.value).pipe(
-        finalize(
-          () => {
-            this.submit = false
-          }
-        )
-      ).subscribe(
-        () => {
-          this.notification.addSuccessMessage('Usuário cadastrado com sucesso.');
-          this.router.navigate(['login']);
-        },
-        () => {
-          this.notification.addErrorMessage('Falha ao cadastrar usuário.');
-        }
-      );
-    }
+    this.submit = true;
+    this.usuarioService.salvar(this.form.value).pipe(
+      finalize(() => this.submit = false)
+    ).subscribe(
+      () => {
+        this.notification.addSuccessMessage('Usuário cadastrado com sucesso.');
+        this.router.navigate(['login']);
+      },
+      () => {
+        this.notification.addErrorMessage('Falha ao cadastrar usuário.');
+      }
+    );
   }
+
 
   iniciarForm() {
     this.form = this.fb.group({
