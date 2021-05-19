@@ -3,6 +3,7 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Usuario;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.UsuarioRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.TokenDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.UsuarioListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
@@ -79,5 +80,12 @@ public class UsuarioServico {
 
     public void excluir(Long id) {
         usuarioRepositorio.deleteById(id);
+    }
+
+
+    public UsuarioDTO logar(TokenDTO tokenDTO) {
+        return usuarioMapper.toDto(
+                usuarioRepositorio.findByToken(tokenDTO.getToken())
+                        .orElseThrow(() -> new RegraNegocioException("Usuário não encontrado")));
     }
 }

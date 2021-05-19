@@ -45,7 +45,7 @@ public class OfertaRecurso {
     }
 
     @PostMapping
-    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @RequestParam String token){
+    public ResponseEntity<OfertaDTO> salvar(@RequestBody OfertaDTO ofertaDTO, @RequestParam("token") String token){
         OfertaDTO oferta = ofertaServico.salvar(ofertaDTO, token);
         return new ResponseEntity<>(oferta, HttpStatus.CREATED);
     }

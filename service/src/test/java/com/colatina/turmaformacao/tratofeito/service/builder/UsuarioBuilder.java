@@ -28,6 +28,15 @@ public class UsuarioBuilder extends ConstrutorEntidade<Usuario> {
         return usuario;
     }
 
+    public Usuario criarOutroUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setNome("Usuario Teste2");
+        usuario.setEmail("usuarioALVO2@gmail.com");
+        usuario.setCpf("93472862068");
+        usuario.setDataNascimento(LocalDate.of(2000,04,15));
+        return usuario;
+    }
+
     @Override
     public Usuario persistir(Usuario entidade) {
         return usuarioMapper.toEntity(usuarioServico.salvar(usuarioMapper.toDto(entidade)));

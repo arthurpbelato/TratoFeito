@@ -2,6 +2,7 @@ package com.colatina.turmaformacao.tratofeito.service.servico.mapper;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,8 +13,7 @@ public interface ItemListagemMapper extends EntityMapper<ItemListagemDTO, Item>{
     @Mapping(source = "categoria.descricao", target = "descricaoCategoria")
     ItemListagemDTO toDto(Item entity);
 
-    @Mapping(source = "idUsuario", target = "usuario.id")
-    @Mapping(source = "descricaoCategoria", target = "categoria.descricao")
+    @InheritInverseConfiguration
     Item toEntity(ItemListagemDTO dto);
 
 }
