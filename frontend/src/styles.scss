@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+.layout-container .topbar{
+    background-color: #ffd440 !important;
+}
+
+.layout-container .topbar .topbar-left{
+    background-color: #ffc600 !important;
+}
+
+.layout-container .topbar .topbar-right #menu-button {
+    background-color: #040f0f !important;
+}
+
+.layout-container .layout-menu .ui-scrollpanel {
+    background: #dcdcdc75  !important ;
+}
+
+.layout-container .layout-breadcrumb .layout-breadcrumb-options{
+    display: none !important;
+}

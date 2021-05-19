@@ -14,19 +14,13 @@
             <li #settings [ngClass]="{'active-top-menu':app.activeTopbarItem === settings}">
                 <a href="#" (click)="app.onTopbarItemClick($event,settings)">
                     <i class="topbar-icon material-icons">settings</i>
-                    <span class="topbar-item-name">Settings</span>
+                    <span class="topbar-item-name">Configurações</span>
                 </a>
                 <ul class="ultima-menu animated fadeInDown">
                     <li role="menuitem">
-                        <a routerLink="/diario-erros">
-                            <i class="material-icons">error</i>
-                            <span>Diário de Erros</span>
-                        </a>
-                    </li>
-                    <li role="menuitem">
-                        <a logout>
+                        <a logout (click)="logout()" [style]="{'cursor': 'pointer'}">
                             <i class="material-icons">power_settings_new</i>
-                            <span>Sair</span>
+                            <span >Sair</span>
                         </a>
                     </li>
                 </ul>
@@ -39,11 +33,14 @@
                 <ul class="ultima-menu animated fadeInDown">
                     <li role="menuitem">
                         <a>
-                            <span user><strong>Usuário: </strong></span>
+                            <span user >
+                                <strong>Usuário:</strong>  {{authService.usuarioLogado.nome}}
+                            </span>
                         </a>
                     </li>
                 </ul>
             </li>
+            
         </ul>
     </div>
 </div>
