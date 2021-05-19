@@ -15,6 +15,4 @@ export class UsuarioModel{
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
     }
-
-
 }

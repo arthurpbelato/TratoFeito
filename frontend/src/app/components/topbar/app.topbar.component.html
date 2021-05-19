@@ -10,7 +10,7 @@
         <a id="topbar-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
             <i class="material-icons">menu</i>
         </a>
-        <ul class="topbar-items animated fadeInDown" [ngClass]="{'topbar-items-visible': app.topbarMenuActive}">a
+        <ul class="topbar-items animated fadeInDown" [ngClass]="{'topbar-items-visible': app.topbarMenuActive}">
             <li #settings [ngClass]="{'active-top-menu':app.activeTopbarItem === settings}">
                 <a href="#" (click)="app.onTopbarItemClick($event,settings)">
                     <i class="topbar-icon material-icons">settings</i>
