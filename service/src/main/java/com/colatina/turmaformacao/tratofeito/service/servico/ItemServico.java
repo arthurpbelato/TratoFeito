@@ -2,6 +2,7 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ImagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
@@ -62,6 +63,13 @@ public class ItemServico {
 
     public List<Item> salvarLista (List<Item> lista){
         return itemRepositorio.saveAll(lista);
+    }
+
+    public ImagemDTO getImagem (Long id){
+        ImagemDTO imagemDTO = new ImagemDTO();
+        imagemDTO.setFoto(getItem(id).getFoto());
+
+        return imagemDTO;
     }
 
 }
