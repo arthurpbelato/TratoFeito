@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+    <div class="ui-fluid">
+        <div class="p-field">
+            <label for="email">Usuario</label>
+            <input id="email" type="text" pInputText formControlName="email">
+        </div>
+        <div class="p-field">
+            <label for="token">Senha</label>
+            <input id="token" type="password" pInputText formControlName="token">
+        </div>
+    </div>
+    <button pButton type="button" class="ui-button-raised ui-button-rounded" 
+    [disabled]="form.invalid || submit" label="Logar"></button>
+</form>

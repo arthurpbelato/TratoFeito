@@ -1,3 +1,4 @@
+import { HomepageModule } from './homepage/homepage.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -24,7 +25,7 @@ import { BlockUIModule } from 'ng-block-ui';
     imports: [
         BlockUIModule.forRoot({
             message: "Carregando..."
-          }),
+        }),
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
@@ -36,7 +37,8 @@ import { BlockUIModule } from 'ng-block-ui';
         ErrorModule,
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
-        MenuModule
+        MenuModule,
+        HomepageModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }

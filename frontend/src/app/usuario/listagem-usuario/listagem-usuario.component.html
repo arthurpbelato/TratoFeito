@@ -1,0 +1,58 @@
+<h3>Usuarios</h3>
+
+<form [formGroup]="form" (ngSubmit)="salvarUsuario()">
+    <p-dialog [header]="!this.isEditing ? 'Cadastro de usuario' : 'Alterar usuario'" [(visible)]="displayModal" [modal]="true"
+        [style]="{width: '90vw' , height: '90vw'}" [baseZIndex]="10000" 
+        [draggable]="false" [resizable]="false" (onHide)="fecharModal()">
+            <div class="ui-fluid">
+                <div class="p-field">
+                    <label for="nome">Nome</label>
+                    <input id="nome" type="text" pInputText formControlName="nome">
+                </div>
+                <div class="p-field">
+                    <label for="email">Email</label>
+                    <input id="email" type="text" pInputText formControlName="email">
+                </div>
+                <div class="p-field">
+                    <label for="cpf">CPF</label>
+                    <p-inputMask mask="999.999.999-99" formControlName="cpf" [unmask]="true"></p-inputMask>
+                </div>
+                <div class="p-field">
+                    <label for="dataNascimento">Data Nascimento</label>
+                    <p-calendar formControlName="dataNascimento" dateFormat="dd.mm.yy" [utc]='true'></p-calendar>
+                </div>
+            </div>
+        <p-footer>
+            <button type="submit" pButton [label]="!this.isEditing ? 'Criar' : 'Salvar'" [disabled]="form.invalid || submit"></button>
+            <button type="button" pButton label="Fechar" (click)="fecharModal()" icon="pi pi-times"  class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+</form>
+
+<button pButton type="button" class="ui-button-raised ui-button-rounded" label="Criar Novo Usuario"
+    (click)="abrirModal()"></button>
+
+<p-table [value]="usuarios">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Data Nascimento</th>
+            <th>Ações</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+        <tr>
+            <td>{{usuario.id}}</td>
+            <td>{{usuario.nome}}</td>
+            <td>{{usuario.email}}</td>
+            <td>{{usuario.dataNascimento}}</td>
+            <td><button pButton type="button" class="ui-button-raised ui-button-raised" label="Alterar"
+                (click)="editarUsuario(usuario.id)"></button>
+                <button pButton type="button" class="ui-button-raised ui-button-danger" label="Excluir"
+                (click)="excluirUsuario(usuario.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

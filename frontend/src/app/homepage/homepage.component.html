@@ -1,0 +1,54 @@
+<h1>Itens</h1>
+<p-carousel [value]="itens" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" 
+[responsiveOptions]="responsiveOptions" [style]="{'height':'400px', 'margin-top':'3em'}">
+    <p-header>
+        <h2>Outros</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWN4+FDxPwAHbQLjXOq3lAAAAABJRU5ErkJggg==" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons">
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-check"></button>
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel [value]="itens" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true"
+    [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Colecionaveis</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWOY6pD/HwAE9gJEb0on+gAAAABJRU5ErkJggg==" width="200px"/>
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons">
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-check"></button>
+                        <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
