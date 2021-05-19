@@ -1,5 +1,6 @@
 import { ItemModel } from './../models/item.model';
 import { Component, OnInit } from '@angular/core';
+import { Footer } from 'primeng';
 
 @Component({
   selector: 'app-homepage',
@@ -23,13 +24,18 @@ export class HomepageComponent implements OnInit {
         id : i+1,
         nome : "Item",
         descricao : "asasdas",
-        foto : "foto",
+        foto : "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWMQWeDwHwADtAH0v+zydgAAAABJRU5ErkJggg==",
         disponibilidade : true,
         situacao : "situacao",
         usuario : "usuario",
         categoria : "categoria"
       })
     }
+  }
+
+  get converterImagem() {
+    
+    return ;
   }
 
 }

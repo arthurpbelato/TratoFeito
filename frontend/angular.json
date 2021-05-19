@@ -21,11 +21,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeflex/primeflex.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/@nuvem/angular-base/src/lib/accessibility/accessibility.scss",
               "src/styles.scss"
-            ],
+                        ],
             "scripts": [
               "node_modules/moment/moment.js",
               "node_modules/chart.js/dist/Chart.js",
@@ -82,6 +83,7 @@
               "node_modules/quill/dist/quill.js"
             ],
             "styles": [
+              "node_modules/primeflex/primeflex.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/quill/dist/quill.snow.css",
               "styles.css"

@@ -6,26 +6,22 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     let token = localStorage.getItem('token');
-
-    if (token) {
-      const req = request.clone({
-        setHeaders: {
-          Token: `${token}`
-        }
-      });
-
+    if(token){
+      const req = request.clone({ setHeaders:{
+        Token: `${token}`
+      }});
       return next.handle(req);
     }
-
     return next.handle(request);
   }
 }

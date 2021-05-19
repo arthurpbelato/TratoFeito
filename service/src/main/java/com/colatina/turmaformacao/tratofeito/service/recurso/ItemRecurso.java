@@ -1,6 +1,7 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ImagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +65,12 @@ public class ItemRecurso {
         return new ResponseEntity<>(itemServico.disponibilizar(item, disponibilidade),
                 HttpStatus.OK);
     }
+
+    @GetMapping("/imagem/{id}")
+    public ResponseEntity<ImagemDTO> getImagem(@PathVariable("id") Long id) {
+        ImagemDTO imagemDTO = itemServico.getImagem(id);
+        return new ResponseEntity<>(imagemDTO, HttpStatus.OK);
+    }
+
 
 }

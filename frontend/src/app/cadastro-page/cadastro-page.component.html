@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="salvar()">
+        <div class="ui-fluid">
+            <div class="p-field">
+                <label for="nome">Nome</label>
+                <input formControlName="nome" id="nome" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input formControlName="email" id="email" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="cpf">CPF</label>
+                <p-inputMask formControlName="cpf" mask="999.999.999-99" [unmask]=true></p-inputMask>
+            </div>
+            <div clp-dialogass="p-field">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <p-calendar formControlName="dataNascimento"></p-calendar>
+            </div>
+        </div>
+
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar" [disabled]="form.invalid || submit"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar"
+                class="ui-button-secondary"></button>
+        </p-footer>
+</form>
