@@ -47,7 +47,6 @@ import {CardModule} from 'primeng/card';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        { provide: LOCALE_ID, useValue: 'pt-BR'},
         { provide: HTTP_INTERCEPTORS, multi: true, useClass: TokenInterceptor}
     ],
     bootstrap: [AppComponent]

@@ -1,11 +1,10 @@
 import { SharedModule } from './../shared/shared.module';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UsuarioRoutingModule } from './usuario-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-
 
 @NgModule({
   declarations: [ProfilePageComponent],
@@ -13,7 +12,9 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     CommonModule,
     UsuarioRoutingModule,
     SharedModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }]
 })
 export class UsuarioModule { }
