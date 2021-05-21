@@ -10,8 +10,7 @@ import { ItemModel } from '../model/item.model';
 
 @Component({
   selector: 'app-item-cadastro',
-  templateUrl: './item-cadastro.component.html',
-  styleUrls: ['./item-cadastro.component.css']
+  templateUrl: './item-cadastro.component.html'
 })
 export class ItemCadastroComponent implements OnInit {
 
@@ -51,7 +50,7 @@ export class ItemCadastroComponent implements OnInit {
       disponibilidade: [false, [Validators.required]],
       situacao: ['OK', [Validators.required]],
       idUsuario: [JSON.parse(localStorage.getItem("usuario")).id, [Validators.required]],
-      idCategoria: [null, {update: 'change'}]
+      idCategoria: [null, [Validators.required], {update: 'change'}]
     });
   }
 
@@ -81,36 +80,44 @@ export class ItemCadastroComponent implements OnInit {
   onSubmit() {
     this.submit = true;
     if(this.isEditing){
-      this.itemService.alterar(this.form.value).pipe(
-        finalize(() => {
-          this.submit = false;
-          this.fecharModal();
-        })
-      ).subscribe(
-        () => {
-          this.itemListagemOutput.emit();
-          this.notification.addSuccessMessage("Item Atualizado com Sucesso.");
-        },
-        () => {
-          this.notification.addErrorMessage("Falha ao Atualizar Item.");
-        }
-      );
+      this.alterarItem();
     }else{
-      this.itemService.salvar(this.form.value).pipe(
-        finalize(() => {
-          this.submit = false;
-          this.fecharModal();
-        })
-      ).subscribe(
-        (item) => {
-          this.itemListagemOutput.emit();
-          this.notification.addSuccessMessage("Item Inserido com Sucesso.");
-        },
-        () => {
-          this.notification.addErrorMessage("Falha ao Inserir Item.");
-        }
-      );
+      this.salvarItem();
     }
+  }
+
+  private salvarItem(){
+    this.itemService.salvar(this.form.value).pipe(
+      finalize(() => {
+        this.submit = false;
+        this.fecharModal();
+      })
+    ).subscribe(
+      (item) => {
+        this.itemListagemOutput.emit();
+        this.notification.addSuccessMessage("Item Inserido com Sucesso.");
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao Inserir Item.");
+      }
+    );
+  }
+
+  private alterarItem(){
+    this.itemService.alterar(this.form.value).pipe(
+      finalize(() => {
+        this.submit = false;
+        this.fecharModal();
+      })
+    ).subscribe(
+      () => {
+        this.itemListagemOutput.emit();
+        this.notification.addSuccessMessage("Item Atualizado com Sucesso.");
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao Atualizar Item.");
+      }
+    );
   }
 
   alterar(id: number){
@@ -121,34 +128,16 @@ export class ItemCadastroComponent implements OnInit {
         this.form.patchValue({
           ...item
         });
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao buscar Item de ID " + id + ".");
       }
     );
   }
 
   fecharModal() {
     this.form.patchValue(
-      {id: null}
-    );
-    this.form.patchValue(
-      {nome: ''}
-    );
-    this.form.patchValue(
-      {descricao: ''}
-    );
-    this.form.patchValue(
-      {foto: null}
-    );
-    this.form.patchValue(
-      {disponibilidade: false}
-    );
-    this.form.patchValue(
-      {situacao: 'OK'}
-    );
-    this.form.patchValue(
-      {idUsuario: JSON.parse(localStorage.getItem("usuario")).id}
-    );
-    this.form.patchValue(
-      {idCategoria: null}
+      {id: null, nome: '', descricao: '', foto: null, disponibilidade: false, situacao: 'OK', idUsuario: JSON.parse(localStorage.getItem("usuario")).id, idCategoria: null}
     );
     this.display = false;
     this.isEditing = false;

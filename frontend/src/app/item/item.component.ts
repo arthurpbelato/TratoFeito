@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { ItemService } from '../service/item.service';
 import { ItemCadastroComponent } from './item-cadastro/item-cadastro.component';
@@ -7,10 +7,9 @@ import { ItemModel } from './model/item.model';
 
 @Component({
   selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  templateUrl: './item.component.html'
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
   
   itensCurr: ItemModel[];
   @ViewChild(ItemCadastroComponent) itemCadastroComponent: ItemCadastroComponent;
@@ -20,10 +19,7 @@ export class ItemComponent implements OnInit {
     private notification: PageNotificationService
     ) {}
 
-  ngOnInit(): void {
-  }
-
-  buscarTodosEmit(){
+  buscarTodosHandler(){
     this.buscarTodos();
   }
 
@@ -54,7 +50,7 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  alterarEmit(id: number){
+  alterarHandler(id: number){
     this.itemCadastroComponent.alterar(id);
   }
 

@@ -29,8 +29,8 @@ export class ItemService {
     return this.http.put(`${this.api}`, item) as Observable<any>;
   }
 
-  deletar(id: number) {
-    return this.http.delete(`${this.api}/${id}`);
+  deletar(id: number): Observable<void>{
+    return this.http.delete(`${this.api}/${id}`) as Observable<any>;
   }
 
   disponibilizar(id: number, disponibilidade: boolean): Observable<ItemModel> {
