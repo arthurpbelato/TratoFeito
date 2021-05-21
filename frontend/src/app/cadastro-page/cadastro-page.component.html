@@ -1,4 +1,6 @@
-<form [formGroup]="form" (ngSubmit)="salvar()">
+<div class="card cad-card shadow-box ui-shadow-3">
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+        <h1><strong>Cadastro</strong></h1>
         <div class="ui-fluid">
             <div class="p-field">
                 <label for="nome">Nome</label>
@@ -14,13 +16,13 @@
             </div>
             <div clp-dialogass="p-field">
                 <label for="dataNascimento">Data de Nascimento</label>
-                <p-calendar formControlName="dataNascimento"></p-calendar>
+                <p-calendar formControlName="dataNascimento" [style]="{'margin-bottom': '33px'}"></p-calendar>
             </div>
         </div>
 
         <p-footer>
-            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar" [disabled]="form.invalid || submit"></button>
-            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar"
-                class="ui-button-secondary"></button>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar"
+                [disabled]="form.invalid || submit"></button>
         </p-footer>
-</form>
+    </form>
+</div>

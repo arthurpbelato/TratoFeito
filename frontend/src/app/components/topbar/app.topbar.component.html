@@ -20,7 +20,7 @@
                     <li role="menuitem">
                         <a logout (click)="logout()" [style]="{'cursor': 'pointer'}">
                             <i class="material-icons">power_settings_new</i>
-                            <span >Sair</span>
+                            <span>Sair</span>
                         </a>
                     </li>
                 </ul>
@@ -33,14 +33,15 @@
                 <ul class="ultima-menu animated fadeInDown">
                     <li role="menuitem">
                         <a>
-                            <span user >
-                                <strong>Usuário:</strong>  {{authService.usuarioLogado.nome}}
-                            </span>
+                            <span user>
+                                <a [routerLink]="[ 'perfil']"><strong>Usuário:</strong>
+                                    {{authService.usuarioLogado.nome}}
+                                </a> </span>
                         </a>
                     </li>
                 </ul>
             </li>
-            
+
         </ul>
     </div>
 </div>
