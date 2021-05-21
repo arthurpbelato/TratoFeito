@@ -27,8 +27,9 @@ export class ProfilePageComponent implements OnInit {
     this.iniciarForm();
     this.form.patchValue({
       ...this.authService.usuarioLogado,
-      dataNascimento: new Date(this.authService.usuarioLogado.dataNascimento)
-    });    
+      dataNascimento: new Date(this.authService.usuarioLogado.dataNascimento
+        .toString().replace(/-/g,'/'))
+    });
   }
 
 salvar() {
