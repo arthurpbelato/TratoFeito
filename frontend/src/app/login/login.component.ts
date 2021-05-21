@@ -1,3 +1,4 @@
+import { PageNotificationService } from '@nuvem/primeng-components';
 import { AuthService } from './../service/auth.service';
 import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, 
               private loginService: LoginService,
               private router: Router,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private notification: PageNotificationService) { }
 
   ngOnInit(): void {
     this.iniciarForm();
@@ -41,6 +43,9 @@ export class LoginComponent implements OnInit {
       (data) => {
         this.authService.guardarDadosLogin(this.form.get('token'), data);
         this.router.navigate(['admin'])
+      },
+      () => {
+        this.notification.addErrorMessage("Informações incorretas. Falha no login");
       }
     )
   }
