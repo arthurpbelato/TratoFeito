@@ -2,10 +2,13 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
-import com.colatina.turmaformacao.tratofeito.service.servico.dto.ImagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemDetalhadoListagemMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemDetalhadoMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemListagemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,8 @@ public class ItemServico {
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
     private final ItemListagemMapper itemListagemMapper;
+    private final ItemDetalhadoMapper itemDetalhadoMapper;
+    private final ItemDetalhadoListagemMapper itemDetalhadoListagemMapper;
 
     private Item getItem(Long id){
         return itemRepositorio.findById(id).orElseThrow(() ->
@@ -65,11 +70,13 @@ public class ItemServico {
         return itemRepositorio.saveAll(lista);
     }
 
-    public ImagemDTO getImagem (Long id){
-        ImagemDTO imagemDTO = new ImagemDTO();
-        imagemDTO.setFoto(getItem(id).getFoto());
+    public ItemDetalhadoDTO getItemDetalhadoDTO(Long id){
+        return itemDetalhadoMapper.toDto(getItem(id));
+    }
 
-        return imagemDTO;
+    public List<ItemDetalhadoListagemDTO> listarItemDetalhado(){
+        List<Item> itemList = itemRepositorio.findAll();
+        return itemDetalhadoListagemMapper.toDto(itemList);
     }
 
 }

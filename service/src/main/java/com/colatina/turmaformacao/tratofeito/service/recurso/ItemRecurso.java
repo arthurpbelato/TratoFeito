@@ -1,8 +1,9 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.dto.ImagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -66,11 +67,16 @@ public class ItemRecurso {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/imagem/{id}")
-    public ResponseEntity<ImagemDTO> getImagem(@PathVariable("id") Long id) {
-        ImagemDTO imagemDTO = itemServico.getImagem(id);
-        return new ResponseEntity<>(imagemDTO, HttpStatus.OK);
+    @GetMapping("/item-detalhado/{id}")
+    public ResponseEntity<ItemDetalhadoDTO> getItemDetalhado(@PathVariable("id") Long id) {
+        ItemDetalhadoDTO itemDetalhadoDTO = itemServico.getItemDetalhadoDTO(id);
+        return new ResponseEntity<>(itemDetalhadoDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/item-detalhado")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhado() {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhado();
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
 
 }

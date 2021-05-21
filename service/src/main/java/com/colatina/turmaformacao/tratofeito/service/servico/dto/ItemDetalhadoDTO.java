@@ -5,12 +5,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImagemDTO implements Serializable {
+public class ItemDetalhadoDTO {
+
+    private Long id;
+
+    private String nome;
+
+    private String descricao;
+
     private byte[] foto;
+
+    private Boolean disponibilidade;
+
+    private String situacao;
+
+    private String usuario;
+
+    private String categoria;
+
 }
