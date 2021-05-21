@@ -1,13 +1,24 @@
 export class ItemModel {
+    
+    id?: number;
+    nome?: string;
+    descricao?: string;
+    foto?: any;
+    disponibilidade?: boolean;
+    situacao?: string;
+    idUsuario?: number;
+    idCategoria?: number;
+    
     constructor(
-            public id?: number,
-            public nome?: string,
-            public descricao?: string,
-            public foto?: Blob,
-            public disponibilidade?: boolean,
-            public situacao?: string,
-            public idUsuario?: number,
-            public idCategoria?: number
+            id?: number,
+            nome?: string,
+            descricao?: string,
+            foto?: any,
+            disponibilidade?: boolean,
+            situacao?: string,
+            idUsuario?: number,
+            idCategoria?: number
         ){
     }
+
 }

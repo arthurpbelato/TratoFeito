@@ -1,14 +1,15 @@
+<h3>Seus Itens</h3>
+<br>
 <p-table [value]="itens">
     <ng-template pTemplate="header">
         <tr>
-            <th>id</th>
-            <th>nome</th>
-            <th>descricao</th>
-            <th>foto</th>
-            <th>disponibilidade</th>
-            <th>situacao</th>
-            <th>idUsuario</th>
-            <th>idCategoria</th>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Foto</th>
+            <th>Disponibilidade</th>
+            <th>Categoria</th>
+            <th>Ações</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
@@ -16,11 +17,14 @@
             <td>{{item.id}}</td>
             <td>{{item.nome}}</td>
             <td>{{item.descricao}}</td>
-            <td>{{item.foto}}</td>
+            <td><img [src]=item.foto width="110px" heigth="110px" alt="Imagem do Item"></td>
             <td>{{item.disponibilidade}}</td>
-            <td>{{item.situacao}}</td>
-            <td>{{item.idUsuario}}</td>
-            <td>{{item.idCategoria}}</td>
+            <td>{{item.descricaoCategoria}}</td>
+            <td>
+                <button type="button" pButton (click)="alterar(item.id)" label="Alterar" class="ui-button-secondary"></button>
+                <button type="button" pButton (click)="deletar(item.id)" label="Deletar" class="ui-button-danger"></button>
+            </td>
         </tr>
     </ng-template>
 </p-table>
+<br>

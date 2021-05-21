@@ -26,7 +26,7 @@ export class ItemService {
   }
 
   alterar(item: ItemModel): Observable<ItemModel> {
-    return this.http.post(`${this.api}`, item) as Observable<any>;
+    return this.http.put(`${this.api}`, item) as Observable<any>;
   }
 
   deletar(id: number) {
