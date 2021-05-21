@@ -5,7 +5,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 
 const routes: Routes = [
-  { path: '', component:  ProfilePageComponent},
+  { path: '', component:  ProfilePageComponent, data: { breadcrumb: 'Perfil'}},
 ];
 
 @NgModule({
