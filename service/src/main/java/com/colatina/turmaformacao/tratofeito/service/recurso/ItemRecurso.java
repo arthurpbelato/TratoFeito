@@ -79,4 +79,10 @@ public class ItemRecurso {
         return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/item-detalhado-usuario/{id}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhadoUsuario(@PathVariable("id") Long id) {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhadoUsuario(id);
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
+
 }

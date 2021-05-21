@@ -7,3 +7,8 @@
     margin-top: 3em;
     text-align: center;
 }
+
+.modal-dialog {
+    width: auto !important;
+    height: 100% !important;
+}

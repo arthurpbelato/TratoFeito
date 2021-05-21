@@ -15,9 +15,7 @@
                 </div>
                 <div class="ui-g-12">
                     <button type="submit" pButton (click)="login()" class="ui-button-success" label="Entrar" [disabled]="form.invalid || submit"></button>
-                    <a [routerLink]="[ '/cadastro' ]"><button type="button" pButton class="ui-button-primary"
-                            label="Criar Conta">
-                        </button></a>
+                    <a [routerLink]="[ '/cadastro' ]"><button type="button" pButton class="ui-button-primary" label="Criar Conta"></button></a>
                 </div>
             </form>
         </div>

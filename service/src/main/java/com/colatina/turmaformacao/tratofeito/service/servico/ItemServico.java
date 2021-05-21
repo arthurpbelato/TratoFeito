@@ -79,4 +79,9 @@ public class ItemServico {
         return itemDetalhadoListagemMapper.toDto(itemList);
     }
 
+    public List<ItemDetalhadoListagemDTO> listarItemDetalhadoUsuario(Long id){
+        List<Item> itemList = itemRepositorio.findAllByUsuario(id);
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
+
 }

@@ -1,4 +1,4 @@
-import { UsuarioService } from './../../services/usuario.service';
+import { UsuarioService } from './../../service/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
@@ -21,7 +21,7 @@ export class ListagemUsuarioComponent implements OnInit {
     private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private notification: PageNotificationService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.buscarTodos();

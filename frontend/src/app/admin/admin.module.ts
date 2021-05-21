@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomepageModule } from '../homepage/homepage.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MenuModule,
     BlockUIModule.forRoot({
       message: "Carregando..."
-    })
+    }),
+    HomepageModule
   ]
 })
 export class AdminModule { }

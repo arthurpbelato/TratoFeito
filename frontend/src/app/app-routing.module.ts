@@ -7,7 +7,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { LoginSuccessComponent } from '@nuvem/angular-base';
 
-import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,7 +14,6 @@ const routes: Routes = [
     .then(m => m.AdminModule), canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
-    { path: 'homepage', component: HomepageComponent },
     { path: 'login-success', component: LoginSuccessComponent},
     { path: 'cadastro', component: CadastroPageComponent}
 ];
