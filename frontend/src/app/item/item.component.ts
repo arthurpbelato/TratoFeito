@@ -24,9 +24,15 @@ export class ItemComponent {
   }
 
   buscarTodos(){
+    this.itensCurr = [];
     this.itemService.listar().subscribe(
-      (itens) => {
-        this.itensCurr = itens;
+      (itens: ItemModel[]) => {
+        for(let i = 0; i < itens.length; i++){
+          if(itens[i].idUsuario == (JSON.parse(localStorage.getItem("usuario")).id) as number){
+            console.log(itens[i]);
+            this.itensCurr.push(itens[i] as ItemModel);
+          }
+        }
         this.showImage();
       }
     );
