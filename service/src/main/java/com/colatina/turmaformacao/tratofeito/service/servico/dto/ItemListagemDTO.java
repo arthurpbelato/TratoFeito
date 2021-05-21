@@ -8,9 +8,9 @@ import lombok.Setter;
 public class ItemListagemDTO {
     private Long id;
     private String nome;
+    private byte[] foto;
     private String descricao;
     private Boolean disponibilidade;
     private String descricaoCategoria;
     private Long idUsuario;
-
 }
