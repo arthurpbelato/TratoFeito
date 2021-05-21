@@ -13,7 +13,8 @@ const routes: Routes = [
     .then(m => m.AdminModule), canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent, canActivate: [GuestGuard]},
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
-    { path: 'login-success', component: LoginSuccessComponent},
+    { path: 'login-success', component: LoginSuccessComponent },
+    { path: 'item', loadChildren: () => import('./item/item.module').then(m => m.ItemModule) },
     { path: 'cadastro', component: CadastroPageComponent}
 ];
 
