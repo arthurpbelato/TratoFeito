@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { SelectItem } from 'primeng';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/service/auth.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 import { ItemService } from 'src/app/service/item.service';
 import { ItemModel } from '../model/item.model';
 
@@ -18,25 +20,31 @@ export class ItemCadastroComponent implements OnInit {
   submit: boolean = false;
   isEditing: boolean = false;
   form: FormGroup;
-  imagemUrl: string = "Selecione uma imagem";
+  fileName: string = "Selecione uma imagem";
+  usuarioLogadoId: number = this.authService.usuarioLogado.id;
 
   @ViewChild('myImageInput')
   myImageInputVariable: ElementRef;
 
   @Output() itemListagemOutput: EventEmitter<void> = new EventEmitter();
 
-  categorias: SelectItem[] = [
-      {label: 'Colecionável', value: 1},
-      {label: 'Edição Especial', value: 2},
-      {label: 'Antiguidade', value: 3},
-      {label: 'Artesanal', value: 4},
-      {label: 'Memorabilia', value: 5},
-      {label: 'Item Autografado', value: 6},
-      {label: 'Outro', value: 7}
-  ];
+  categorias: SelectItem[] = [];
+
+  getCategorias(){
+    this.categoriaService.listar().subscribe(
+      (categorias) => {
+        this.categorias = categorias;
+      },
+      () => {
+        this.notification.addErrorMessage("Falha ao Carregar Categorias.");
+      }
+    );
+  }
 
   constructor(
     private itemService: ItemService, 
+    private categoriaService: CategoriaService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private notification: PageNotificationService
     ) { }
@@ -49,12 +57,13 @@ export class ItemCadastroComponent implements OnInit {
       foto: [null, [Validators.required]],
       disponibilidade: [false, [Validators.required]],
       situacao: ['OK', [Validators.required]],
-      idUsuario: [JSON.parse(localStorage.getItem("usuario")).id, [Validators.required]],
+      idUsuario: [this.usuarioLogadoId, [Validators.required]],
       idCategoria: [null, [Validators.required]]
     });
   }
 
   ngOnInit(): void {
+    this.getCategorias();
     this.itemListagemOutput.emit();
     this.iniciarForm();
   }
@@ -65,14 +74,13 @@ export class ItemCadastroComponent implements OnInit {
 
   onFileChanged(event){
     const file = event.target.files[0];
-    file.name
     const reader = new FileReader();
     reader.onloadend = () => {
-      let image: string = `${reader.result}`;
+      const image: string = `${reader.result}`;
       this.form.patchValue({
         foto: image.split(',',2)[1]
       });
-      this.imagemUrl = file.name;
+      this.fileName = file.name;
     }
     reader.readAsDataURL(file);
   }
@@ -120,7 +128,7 @@ export class ItemCadastroComponent implements OnInit {
     );
   }
 
-  alterar(id: number){
+  editandoForm(id: number){
     this.isEditing = true;
     this.itemService.obterPorId(id).subscribe(
       (item: ItemModel) => {
@@ -130,19 +138,19 @@ export class ItemCadastroComponent implements OnInit {
         });
       },
       () => {
-        this.notification.addErrorMessage("Falha ao buscar Item de ID " + id + ".");
+        this.notification.addErrorMessage(`Falha ao buscar Item de ID ${id}.`);
       }
     );
   }
 
   fecharModal() {
     this.form.patchValue(
-      {id: null, nome: null, descricao: null, foto: null, disponibilidade: false, situacao: 'OK', idUsuario: JSON.parse(localStorage.getItem("usuario")).id, idCategoria: null}
+      {id: null, nome: null, descricao: null, foto: null, disponibilidade: false, situacao: 'OK', idUsuario: this.usuarioLogadoId, idCategoria: null}
     );
     this.display = false;
     this.isEditing = false;
     this.myImageInputVariable.nativeElement.value = "";
-    this.imagemUrl = "Selecione uma imagem";
+    this.fileName = "Selecione uma imagem";
   }
 
 }

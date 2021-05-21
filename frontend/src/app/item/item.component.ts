@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { PageNotificationService } from '@nuvem/primeng-components';
+import { AuthService } from '../service/auth.service';
 import { ItemService } from '../service/item.service';
 import { ItemCadastroComponent } from './item-cadastro/item-cadastro.component';
 import { ItemModel } from './model/item.model';
@@ -12,41 +12,27 @@ import { ItemModel } from './model/item.model';
 export class ItemComponent {
   
   itensCurr: ItemModel[];
+  authService: AuthService = new AuthService();
+  usuarioLogadoId: number = this.authService.usuarioLogado.id;
+
   @ViewChild(ItemCadastroComponent) itemCadastroComponent: ItemCadastroComponent;
 
   constructor(
     private itemService: ItemService, 
-    private notification: PageNotificationService
     ) {}
-
-  buscarTodosHandler(){
-    this.buscarTodos();
-  }
 
   buscarTodos(){
     this.itensCurr = [];
     this.itemService.listar().subscribe(
-      (itens: ItemModel[]) => {
-        for(let i = 0; i < itens.length; i++){
-          if(itens[i].idUsuario == (JSON.parse(localStorage.getItem("usuario")).id) as number){
-            this.itensCurr.push(itens[i] as ItemModel);
+      (itens) => {
+        itens.forEach((item: ItemModel)=>{
+          if(item.idUsuario == this.usuarioLogadoId){
+            this.itensCurr.push(item);
           }
-        }
+        })
         this.showImage();
       }
     );
-  }
-
-  deletar(id) {
-    this.itemService.deletar(id).subscribe(
-      () => {
-        this.buscarTodos();
-        this.notification.addSuccessMessage("Item Excluído com Sucesso.");
-      },
-      () => {
-        this.notification.addErrorMessage("Falha ao Excluir Item.");
-      }
-    )
   }
 
   showImage(){
@@ -56,7 +42,7 @@ export class ItemComponent {
   }
 
   alterarHandler(id: number){
-    this.itemCadastroComponent.alterar(id);
+    this.itemCadastroComponent.editandoForm(id);
   }
 
 }
