@@ -44,13 +44,13 @@ export class ItemCadastroComponent implements OnInit {
   iniciarForm() {
     this.form = this.fb.group({
       id: [null],
-      nome: ['', [Validators.required]],
-      descricao: ['', [Validators.required]],
+      nome: [null, [Validators.required]],
+      descricao: [null, [Validators.required]],
       foto: [null, [Validators.required]],
       disponibilidade: [false, [Validators.required]],
       situacao: ['OK', [Validators.required]],
       idUsuario: [JSON.parse(localStorage.getItem("usuario")).id, [Validators.required]],
-      idCategoria: [null, [Validators.required], {update: 'change'}]
+      idCategoria: [null, [Validators.required]]
     });
   }
 
@@ -137,7 +137,7 @@ export class ItemCadastroComponent implements OnInit {
 
   fecharModal() {
     this.form.patchValue(
-      {id: null, nome: '', descricao: '', foto: null, disponibilidade: false, situacao: 'OK', idUsuario: JSON.parse(localStorage.getItem("usuario")).id, idCategoria: null}
+      {id: null, nome: null, descricao: null, foto: null, disponibilidade: false, situacao: 'OK', idUsuario: JSON.parse(localStorage.getItem("usuario")).id, idCategoria: null}
     );
     this.display = false;
     this.isEditing = false;
