@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [OfertasRecebidasComponent, OfertasRecebidasComponent],
+  declarations: [OfertasRecebidasComponent],
   imports: [
     CommonModule,
     OfertaRoutingModule,

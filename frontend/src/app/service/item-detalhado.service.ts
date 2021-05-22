@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { ItemModel } from '../item/model/item.model';
+import { ItemModel } from '../models/item-detalhado.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class ItemDetalhadoService {
 
   private api: string = `${environment.apiUrl}/itens`;
 

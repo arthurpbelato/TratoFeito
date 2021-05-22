@@ -1,51 +1,29 @@
-<p-dataView #dv [value]="ofertas" [paginator]="true" [rows]="15" paginatorPosition="both" filterBy="categoria" [sortField]="sortField" [sortOrder]="sortOrder">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <div class="p-grid">
-                <div class="p-col-12 p-md-4">
-                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
-                </div>
-                <div class="p-col-6 p-md-4 filter-container">
-                    <div style="position:relative">
-                        <input type="search" pInputText placeholder="Buscar por nome" (input)="dv.filter($event.target.value)">
-                    </div>
-                </div>
-                <div class="p-col-6 p-md-4" style="text-align:right">
-                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-                </div>
-            </div>
-        </div>
-    </p-header>
+<p-dataView #dv [value]="ofertas" [paginator]="true" [rows]="15" paginatorPosition="both">
+    <p-header></p-header>
     <ng-template let-oferta pTemplate="listItem">
         <div class="p-col-12">
-            <div class="car-details">
+            <div class="oferta-details">
                 <div class="p-grid p-col-12 p-md-6">
-                    <div class="p-col-12 p-md-6">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWN4di35PwAH5AMftTMJFgAAAABJRU5ErkJggg==" width="200px">
-                    </div>
                     <div class="p-grid p-col-12 p-md-6 p-align-center">
-                        <div class="p-col-12">Item: <b>{{item.nome}}</b></div>
-                        <div class="p-col-12">Usuario: <b>{{item.usuario}}</b></div>
-                        <div class="p-col-12 p-md-6">Categoria: <b>{{item.categoria}}</b></div>
-                        <div class="p-col-12 p-md-6">Situacao: <b>{{item.situacao}}</b></div>
-                        <div class="p-col-12">Descricao: <b>{{item.descricao}}</b>
-                        </div>
+                        <div class="p-col-12">Item: <b>
+                            {{oferta.nomeItemAlvo}}
+                        </b></div>
+                        <div class="p-col-12 p-md-6">Categoria: <b>
+                            {{oferta.categoriaItemAlvo}}
+                        </b></div>
+                        <div class="p-col-12">Usuario: <b>
+                            {{oferta.nomeUsuarioOfertante}}
+                        </b></div>
+                        <div class="p-col-12">Itens Ofertados: </div>
+                        <div class="p-col-12">{{getItensOfertados(oferta)}}</div>
+
                     </div>
-                </div>
-                <div class="p-col-12 p-md-6">
-                    <button pButton type="button" icon="ui-icon-check"></button>
-                    <button pButton type="button" icon="ui-icon-close"></button>
                 </div>
             </div>
-        </div>
-    </ng-template>
-    <ng-template let-car pTemplate="gridItem">
-        <div style="padding:.5em" class="p-col-12 p-md-3">
-            <p-panel [header]="car.vin" [style]="{'text-align':'center'}">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWN4lpH8HwAGmgKxlW78FQAAAABJRU5ErkJggg==" width="60">
-                <div class="car-detail">2000 - azul</div>
-                <button pButton type="button" icon="pi pi-search" (click)="selectCar($event, car)" style="margin-top:0"></button>
-            </p-panel>
+            <div class="p-col-12 p-md-6">
+                <button pButton type="button" icon="ui-icon-check" (click)="aceitar(oferta)"></button>
+                <button pButton type="button" icon="ui-icon-close" (click)="recusar(oferta)"></button>
+            </div>
         </div>
     </ng-template>
 </p-dataView>

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { OfertaModel } from './../models/oferta.model';
+import { OfertaModel } from './../models/oferta-detalhada.model';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class OfertaService {
+export class OfertaDetalhadaService {
 
   private api = `api/ofertas`;
 
@@ -34,8 +34,8 @@ export class OfertaService {
     return this.http.delete(`${this.api}/${id}`);
   }
 
-  aceitar(id: number, token: string) {
-    return this.http.patch(`${this.api}/aceitar/${id}/?token=${token}`, id);
+  aceitar(id: number) {
+    return this.http.patch(`${this.api}/aceitar/${id}`, id);
   }
 
   recusar(id: number) {

@@ -1,7 +1,6 @@
 package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
-import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemIdListDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaListagemDTO;
@@ -78,8 +77,8 @@ public class OfertaRecurso {
     }
 
     @PostMapping("/oferta-detalhada")
-    public ResponseEntity<List<OfertaDetalhadaListagemDTO>> listarOfertasDetalhadas(@RequestBody ItemIdListDTO list) {
-        List<OfertaDetalhadaListagemDTO> ofertaDetalhadaListagemDTO = ofertaServico.listOfertaDetalhada(list.getIds());
+    public ResponseEntity<List<OfertaDetalhadaListagemDTO>> listarOfertasDetalhadas(@RequestBody List<Long> list) {
+        List<OfertaDetalhadaListagemDTO> ofertaDetalhadaListagemDTO = ofertaServico.listOfertaDetalhada(list);
         return new ResponseEntity<>(ofertaDetalhadaListagemDTO, HttpStatus.OK);
     }
 

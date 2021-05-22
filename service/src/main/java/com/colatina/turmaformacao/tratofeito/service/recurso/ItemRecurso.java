@@ -97,6 +97,4 @@ public class ItemRecurso {
         List<ItemDetalhadoListagemDTO> list = itemServico.listarPorCategoriaExcetoUsuario(categoriaId, usuarioId);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
-
 }

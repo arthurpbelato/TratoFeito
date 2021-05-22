@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Footer } from 'primeng';
 
 import { OfertaModel } from './../models/oferta.model';
-import { ItemModel } from './../models/item.model';
+import { ItemModel } from '../models/item-detalhado.model';
 import { OfertaService } from './../service/oferta.service';
-import { ItemService } from './../service/item.service';
 import { UsuarioModel } from './../usuario/models/usuario.model';
 import { AuthService } from './../service/auth.service';
 import { PageNotificationService } from '@nuvem/primeng-components';
+import { ItemDetalhadoService } from '../service/item-detalhado.service';
 
 @Component({
   selector: 'app-homepage',
@@ -36,7 +36,7 @@ export class HomepageComponent implements OnInit {
 
 
   constructor(
-    private itemService: ItemService,
+    private itemService: ItemDetalhadoService,
     private ofertaService: OfertaService,
     private authService: AuthService,
     private notification: PageNotificationService
@@ -98,11 +98,7 @@ export class HomepageComponent implements OnInit {
     this.oferta.idItemAlvo = this.item.id;
     this.oferta.idUsuarioOfertante = this.authService.usuarioLogado.id;
     this.oferta.idItensOfertados = [];
-    for (let i = 0; i < this.itensOfertados.length; i++) {
-      this.oferta.idItensOfertados.push(
-        this.itensOfertados[i].id
-      )
-    }
+    this.oferta.idItensOfertados = this.itensOfertados.map(item => item.id);
   }
 
   ofertar() {
