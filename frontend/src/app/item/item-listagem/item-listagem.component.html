@@ -18,7 +18,7 @@
             <td>{{item.nome}}</td>
             <td>{{item.descricao}}</td>
             <td><img [src]="item.foto" width="110px" heigth="110px" alt="Imagem do Item"></td>
-            <td>{{item.disponibilidade}}</td>
+            <td>{{item.disponibilidade? "SIM" :"NÃO"}}</td>
             <td>{{item.descricaoCategoria}}</td>
             <td>
                 <button type="button" pButton (click)="alterar(item.id)" label="Alterar" class="ui-button-secondary"></button>

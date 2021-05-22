@@ -2,6 +2,8 @@ package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.servico.OfertaServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,5 +69,18 @@ public class OfertaRecurso {
         ofertaServico.recusar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/oferta-detalhada/{id}")
+    public ResponseEntity<OfertaDetalhadaDTO> getOfertaDetalhada(@PathVariable("id") Long id) {
+        OfertaDetalhadaDTO ofertaDetalhadaDTO = ofertaServico.getOfertaDetalhada(id);
+        return new ResponseEntity<>(ofertaDetalhadaDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/oferta-detalhada")
+    public ResponseEntity<List<OfertaDetalhadaListagemDTO>> listarOfertasDetalhadas(@RequestBody List<Long> list) {
+        List<OfertaDetalhadaListagemDTO> ofertaDetalhadaListagemDTO = ofertaServico.listOfertaDetalhada(list);
+        return new ResponseEntity<>(ofertaDetalhadaListagemDTO, HttpStatus.OK);
+    }
+
 
 }

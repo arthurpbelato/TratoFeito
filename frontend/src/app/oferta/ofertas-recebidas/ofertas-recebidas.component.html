@@ -1,0 +1,29 @@
+<p-dataView #dv [value]="ofertas" [paginator]="true" [rows]="15" paginatorPosition="both">
+    <p-header></p-header>
+    <ng-template let-oferta pTemplate="listItem">
+        <div class="p-col-12">
+            <div class="oferta-details">
+                <div class="p-grid p-col-12 p-md-6">
+                    <div class="p-grid p-col-12 p-md-6 p-align-center">
+                        <div class="p-col-12">Item: <b>
+                            {{oferta.nomeItemAlvo}}
+                        </b></div>
+                        <div class="p-col-12 p-md-6">Categoria: <b>
+                            {{oferta.categoriaItemAlvo}}
+                        </b></div>
+                        <div class="p-col-12">Usuario: <b>
+                            {{oferta.nomeUsuarioOfertante}}
+                        </b></div>
+                        <div class="p-col-12">Itens Ofertados: </div>
+                        <div class="p-col-12">{{getItensOfertados(oferta)}}</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <button pButton type="button" icon="ui-icon-check" (click)="aceitar(oferta)"></button>
+                <button pButton type="button" icon="ui-icon-close" (click)="recusar(oferta)"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView>

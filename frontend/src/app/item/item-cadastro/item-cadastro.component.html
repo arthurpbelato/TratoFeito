@@ -19,7 +19,7 @@
                 <label for="imagem-item">Foto</label>
                 <br>
                 <small>{{fileName}}</small>
-                <input #myImageInput hidden id="imagem-item" type="file" (change)="onFileChanged($event)" accept=".jpeg" #fileInput>
+                <input #myImageInput hidden id="imagem-item" type="file" (change)="onFileChanged($event)" accept="image/gif, image/jpeg, image/png" #fileInput>
             </div>
             <button pButton type="button" label="Selecione uma Imagem" (click)="fileInput.click()"></button>
             <br><br>

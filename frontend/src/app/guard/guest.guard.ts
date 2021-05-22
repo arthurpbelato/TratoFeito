@@ -21,7 +21,6 @@ export class GuestGuard implements CanActivate {
 
       this.router.navigate(['./admin']);
       return false;
-
   }
   
 }

@@ -1,3 +1,4 @@
+import { HomepageModule } from './homepage/homepage.module';
 import { CadastroPageComponent } from './cadastro-page/cadastro-page.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +18,7 @@ import { DiarioErrosComponent } from './components/diario-erros/diario-erros.com
 import { BlockUIModule } from 'ng-block-ui';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {CardModule} from 'primeng/card';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import {CardModule} from 'primeng/card';
     imports: [
         BlockUIModule.forRoot({
             message: "Carregando..."
-          }),
+        }),
         ReactiveFormsModule,
         BrowserModule,
         BrowserAnimationsModule,
@@ -43,6 +44,7 @@ import {CardModule} from 'primeng/card';
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
         MenuModule,
+        HomepageModule,
         CardModule
     ],
     providers: [

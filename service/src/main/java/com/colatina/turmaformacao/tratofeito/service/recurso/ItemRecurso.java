@@ -2,6 +2,8 @@ package com.colatina.turmaformacao.tratofeito.service.recurso;
 
 import com.colatina.turmaformacao.tratofeito.service.servico.ItemServico;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,4 +67,34 @@ public class ItemRecurso {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/item-detalhado/{id}")
+    public ResponseEntity<ItemDetalhadoDTO> getItemDetalhado(@PathVariable("id") Long id) {
+        ItemDetalhadoDTO itemDetalhadoDTO = itemServico.getItemDetalhadoDTO(id);
+        return new ResponseEntity<>(itemDetalhadoDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/item-detalhado")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhado() {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhado();
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/item-detalhado-usuario/{id}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhadoUsuario(@PathVariable("id") Long id) {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhadoUsuario(id);
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/item-detalhado-except-usuario/{id}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhadoExceptUsuario(@PathVariable("id") Long id) {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhadoExceptUsuario(id);
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/item-categoria-except-usuario/{categoriaId}/{usuarioId}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemCategoriaExcetoUsuarioLogado(
+            @PathVariable("categoriaId") Long categoriaId, @PathVariable("usuarioId") Long usuarioId){
+        List<ItemDetalhadoListagemDTO> list = itemServico.listarPorCategoriaExcetoUsuario(categoriaId, usuarioId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }
