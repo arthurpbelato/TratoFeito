@@ -1,11 +1,10 @@
+import { OfertasRecebidasComponent } from './ofertas-recebidas/ofertas-recebidas.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { OfertarComponent } from './ofertar/ofertar.component';
-
 
 const routes: Routes = [
-  { path: 'ofertar', component: OfertarComponent },
+  { path: 'ofertas-recebidas', component: OfertasRecebidasComponent, data: { breadcrumb: 'ofertas-recebidas'} },
 ];
 
 @NgModule({

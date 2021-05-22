@@ -37,8 +37,8 @@ export class ItemService {
         return this.http.patch(`${this.api}/disponibilidade/${id}/${disponibilidade}`, null) as Observable<any>;
     }
 
-    getItemDetalhado(id): Observable<ItemModel> {
-        return this.http.get(`${this.api}/item-detalhado/${id}`, id) as Observable<ItemModel>;
+    getItemDetalhado(id: number): Observable<ItemModel> {
+        return this.http.get(`${this.api}/item-detalhado/${id}`) as Observable<ItemModel>;
     }
 
     listarItemDetalhado(): Observable<ItemModel[]> {
@@ -47,5 +47,9 @@ export class ItemService {
 
     listarItemDetalhadoUsuario(id: number): Observable<ItemModel[]> {
         return this.http.get(`${this.api}/item-detalhado-usuario/${id}`) as Observable<ItemModel[]>;
+    }
+
+    listarItemCategoriaExcetoUsuarioLogado(categoriaId: number, usuarioId: number): Observable<ItemModel[]> {
+        return this.http.get(`${this.api}/item-categoria-except-usuario/${categoriaId}/${usuarioId}`) as Observable<ItemModel[]>;
     }
 }

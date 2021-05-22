@@ -9,37 +9,41 @@ import { Injectable } from '@angular/core';
 })
 export class OfertaService {
 
-  private api = environment.apiUrl;
+  private api = `api/ofertas`;
 
   constructor(private http: HttpClient) {
   }
 
   buscarTodos(): Observable<OfertaModel[]> {
-    return this.http.get<any[]>(`api/ofertas`) as Observable<OfertaModel[]>;
+    return this.http.get<any[]>(`${this.api}`) as Observable<OfertaModel[]>;
   }
 
-  buscarPorId(id): Observable<OfertaModel> {
-    return this.http.get<any>(`api/ofertas/${id}`) as Observable<OfertaModel>;
+  buscarPorId(id: number): Observable<OfertaModel> {
+    return this.http.get<any>(`${this.api}/${id}`) as Observable<OfertaModel>;
   }
 
-  salvar(oferta): Observable<OfertaModel> {
-    return this.http.post(`api/ofertas`, oferta) as Observable<OfertaModel>;
+  salvar(oferta: OfertaModel, token: string): Observable<OfertaModel> {
+    return this.http.post(`${this.api}/?token=${token}`, oferta) as Observable<OfertaModel>;
   }
 
-  atualizar(oferta): Observable<OfertaModel> {
-    return this.http.put(`api/ofertas`, oferta) as Observable<OfertaModel>;
+  atualizar(oferta: OfertaModel): Observable<OfertaModel> {
+    return this.http.put(`${this.api}`, oferta) as Observable<OfertaModel>;
   }
 
-  excluir(id) {
-    return this.http.delete(`api/ofertas/${id}`);
+  excluir(id: number) {
+    return this.http.delete(`${this.api}/${id}`);
   }
 
-  aceitar(id) {
-    return this.http.patch(`api/ofertas/aceitar/${id}`, id);
+  aceitar(id: number) {
+    return this.http.patch(`${this.api}/aceitar/${id}`, id);
   }
 
-  recusar(id) {
-    return this.http.patch(`api/ofertas/recusar/${id}`, id);
+  recusar(id: number) {
+    return this.http.patch(`${this.api}/recusar/${id}`, id);
+  }
+
+  listarOfertasDetalhadas(itens: number[]): Observable<OfertaModel[]> {
+    return this.http.post(`${this.api}/oferta-detalhada`, itens) as Observable<OfertaModel[]>;
   }
 
 }

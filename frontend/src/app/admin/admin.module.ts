@@ -11,6 +11,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomepageModule } from '../homepage/homepage.module';
+import { OfertaModule } from '../oferta/oferta.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HomepageModule } from '../homepage/homepage.module';
     BlockUIModule.forRoot({
       message: "Carregando..."
     }),
-    HomepageModule
+    HomepageModule,
+    OfertaModule,
   ]
 })
 export class AdminModule { }

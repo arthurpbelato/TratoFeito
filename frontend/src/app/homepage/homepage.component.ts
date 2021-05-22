@@ -17,14 +17,22 @@ import { PageNotificationService } from '@nuvem/primeng-components';
 })
 export class HomepageComponent implements OnInit {
 
-  id : number;
+  id: number;
   usuario: UsuarioModel = new UsuarioModel();
-  itens: ItemModel[] = [];
+  itensCat1: ItemModel[] = [];
+  itensCat2: ItemModel[] = [];
+  itensCat3: ItemModel[] = [];
+  itensCat4: ItemModel[] = [];
+  itensCat5: ItemModel[] = [];
+  itensCat6: ItemModel[] = [];
+  itensCat7: ItemModel[] = [];
   item: ItemModel = new ItemModel();
   itensUsuario: ItemModel[] = [];
   itensOfertados: ItemModel[] = [];
   oferta: OfertaModel = new OfertaModel();
   displayModal: boolean = false;
+  podeOfertar: boolean = true;
+  responsiveOptions;
 
 
   constructor(
@@ -35,8 +43,47 @@ export class HomepageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.iniciarListaItens();
+    this.setResponsiveOptions();
+    this.iniciarListas();
     this.getItensUsuarioLogado();
+  }
+
+  setResponsiveOptions() {
+    this.responsiveOptions = [
+      {
+        breakpoint: '1024px',
+        numVisible: 3,
+        numScroll: 3
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 2,
+        numScroll: 2
+      },
+      {
+        breakpoint: '560px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
+  }
+
+  iniciarListas() {
+    this.iniciarListaItensPorCategoria(1, this.itensCat1);
+    this.iniciarListaItensPorCategoria(2, this.itensCat2);
+    this.iniciarListaItensPorCategoria(3, this.itensCat3);
+    this.iniciarListaItensPorCategoria(4, this.itensCat4);
+    this.iniciarListaItensPorCategoria(5, this.itensCat5);
+    this.iniciarListaItensPorCategoria(6, this.itensCat6);
+    this.iniciarListaItensPorCategoria(7, this.itensCat7);
+  }
+
+  iniciarListaItensPorCategoria(categoria, itens: ItemModel[]) {
+    this.itemService.listarItemCategoriaExcetoUsuarioLogado(categoria, this.authService.usuarioLogado.id).subscribe(
+      (lista) => {
+        lista.forEach(a => itens.push(a));
+      }
+    );
   }
 
   showModalDialog() {
@@ -47,20 +94,14 @@ export class HomepageComponent implements OnInit {
     this.displayModal = false;
   }
 
-  iniciarListaItens() {
-
-    this.itemService.listarItemDetalhado().subscribe(
-      (itens) => {
-        this.itens = itens;
-      }
-    )
-  }
-
   setarOferta() {
     this.oferta.idItemAlvo = this.item.id;
     this.oferta.idUsuarioOfertante = this.authService.usuarioLogado.id;
-    for(let i in this.itensOfertados){
-      this.oferta.idItensOfertados[i] = this.itensOfertados[i].id;
+    this.oferta.idItensOfertados = [];
+    for (let i = 0; i < this.itensOfertados.length; i++) {
+      this.oferta.idItensOfertados.push(
+        this.itensOfertados[i].id
+      )
     }
   }
 
@@ -70,13 +111,13 @@ export class HomepageComponent implements OnInit {
   }
 
   salvarOferta() {
-    this.ofertaService.salvar(this.oferta).pipe(
+    this.ofertaService.salvar(this.oferta, localStorage.getItem('token')).pipe(
       finalize(() => {
-        this.disposeModalDialog()
+        this.itensOfertados = [];
+        this.disposeModalDialog();
       })
     ).subscribe(
       () => {
-        this.disposeModalDialog();
         this.notification.addSuccessMessage('Oferta cadastrada com sucesso!');
       },
       () => {
@@ -100,6 +141,6 @@ export class HomepageComponent implements OnInit {
       (itens) => {
         this.itensUsuario = itens;
       }
-    ) 
+    )
   }
 }
