@@ -89,4 +89,8 @@ public class ItemServico {
         return itemDetalhadoListagemMapper.toDto(itemList);
     }
 
+    public List<ItemDetalhadoListagemDTO> listarPorCategoriaExcetoUsuario(Long categoriaId, Long usuarioId) {
+        List<Item> itemList = itemRepositorio.findAllByCategoriaExceptUsuarioLogado(categoriaId, usuarioId);
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
 }
