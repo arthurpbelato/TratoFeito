@@ -22,6 +22,7 @@ export class ItemCadastroComponent implements OnInit {
   form: FormGroup;
   fileName: string = "Selecione uma imagem";
   usuarioLogadoId: number = this.authService.usuarioLogado.id;
+  usuarioLogadoNome: string = this.authService.usuarioLogado.nome;
 
   @ViewChild('myImageInput')
   myImageInputVariable: ElementRef;

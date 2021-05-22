@@ -11,6 +11,7 @@ import { AdminComponent } from 'src/app/admin/admin.component';
 })
 export class AppTopbarComponent {
 
+    usuarioLogadoNome: string = this.authService.usuarioLogado.nome;
     
     constructor(public app: AdminComponent, 
         private readonly _authentication: Authentication<User>,
