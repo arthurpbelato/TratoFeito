@@ -85,4 +85,18 @@ public class ItemRecurso {
         return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/item-detalhado-except-usuario/{id}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemDetalhadoExceptUsuario(@PathVariable("id") Long id) {
+        List<ItemDetalhadoListagemDTO> itemDetalhadoListagemDTO = itemServico.listarItemDetalhadoExceptUsuario(id);
+        return new ResponseEntity<>(itemDetalhadoListagemDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/item-categoria-except-usuario/{categoriaId}/{usuarioId}")
+    public ResponseEntity<List<ItemDetalhadoListagemDTO>> listarItemCategoriaExcetoUsuarioLogado(
+            @PathVariable("categoriaId") Long categoriaId, @PathVariable("usuarioId") Long usuarioId){
+        List<ItemDetalhadoListagemDTO> list = itemServico.listarPorCategoriaExcetoUsuario(categoriaId, usuarioId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
 }

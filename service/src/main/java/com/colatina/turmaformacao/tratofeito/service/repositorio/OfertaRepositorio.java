@@ -40,4 +40,7 @@ public interface OfertaRepositorio extends JpaRepository<Oferta, Long> {
             "(i.nome, " + "u.email) " +
             "from Oferta o join o.item i join o.usuario u where o.id = :id")
     EmailItemOfertaDTO findItemEmailOfertante(@Param("id") Long id);
+
+    @Query("Select o From Oferta o join o.item i Where i.id in :ids")
+    List<Oferta> listOfertasUsuario(@Param("ids") List<Long> ids);
 }

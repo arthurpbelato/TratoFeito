@@ -11,6 +11,14 @@ import java.util.List;
 @Repository
 public interface ItemRepositorio extends JpaRepository<Item, Long> {
 
-    @Query("Select i From Item i Where usuario.id= :id")
+    @Query("Select i From Item i join i.usuario u Where u.id= :id")
     public List<Item> findAllByUsuario(@Param("id") Long id);
+
+    @Query("Select i From Item i join i.usuario u Where u.id<> :id")
+    public List<Item> findAllExceptUsuario(@Param("id") Long id);
+
+    @Query("Select i From Item i join i.categoria c " +
+            "join i.usuario u Where u.id <> :usuarioId and c.id = :categoriaId")
+    List<Item> findAllByCategoriaExceptUsuarioLogado
+            (@Param("categoriaId")Long categoriaId,@Param("usuarioId") Long usuarioId);
 }

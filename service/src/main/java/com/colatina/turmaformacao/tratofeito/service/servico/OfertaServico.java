@@ -12,9 +12,13 @@ import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.EmailItemOfertaDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaDetalhadaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.OfertaListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaDetalhadaListagemMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaDetalhadaMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.OfertaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +40,8 @@ public class OfertaServico {
     private final ItemMapper itemMapper;
     private final Autenticacao autenticacao;
     private final ItemRepositorio itemRepositorio;
+    private final OfertaDetalhadaMapper ofertaDetalhadaMapper;
+    private final OfertaDetalhadaListagemMapper ofertaDetalhadaListagemMapper;
 
     private Oferta getOferta(Long id){
         return ofertaRepositorio.findOfertaById(id);
@@ -176,6 +182,11 @@ public class OfertaServico {
         return email;
     }
 
+    public OfertaDetalhadaDTO getOfertaDetalhada(Long id){
+        return ofertaDetalhadaMapper.toDto(getOferta(id));
+    }
 
-
+    public List<OfertaDetalhadaListagemDTO> listOfertaDetalhada(List<Long> ids){
+        return ofertaDetalhadaListagemMapper.toDto(ofertaRepositorio.listOfertasUsuario(ids));
+    }
 }
