@@ -18,10 +18,8 @@
             <div class="p-field p-col-12">
                 <label for="imagem-item">Foto</label>
                 <br>
-                <small>{{imagemUrl}}</small>
-                <div hidden>
-                    <input #myImageInput id="imagem-item" type="file" (change)="onFileChanged($event)" accept=".jpeg" #fileInput>
-                </div>
+                <small>{{fileName}}</small>
+                <input #myImageInput hidden id="imagem-item" type="file" (change)="onFileChanged($event)" accept=".jpeg" #fileInput>
             </div>
             <button pButton type="button" label="Selecione uma Imagem" (click)="fileInput.click()"></button>
             <br><br>
