@@ -1,0 +1,14 @@
+.bgcard{
+    background-color: #313131 !important;
+    
+}
+
+.card-margin{
+    margin-top: 10%;
+}
+
+.img-align{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10%;
+}

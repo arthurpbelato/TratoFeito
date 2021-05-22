@@ -1,0 +1,214 @@
+<p-dialog class="modal-dialog" header="{{item.nome}}" [modal]="false" [style]="{width: '100vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" [(visible)]="displayModal">
+    <div class="ui-fluid p-formgrid p-grid">
+        <div class="p-grid p-justify-center p-align-center p-col-12 p-md-4">
+            <div class="p-col-6">
+                <img class="photo" src="data:image/png;base64,{{item.foto}}" width="200px" />
+            </div>
+        </div>
+        <div class="p-field p-col-12 p-md-8">
+            <div class="p-grid">
+                <div class=" p-col-12">
+                    <p-fieldset legend="Dono" [toggleable]="false">
+                        {{item.usuario}}
+                    </p-fieldset>
+                </div>
+                <div class=" p-col-12 p-md-6">
+                    <p-fieldset class=".p-fieldset" legend="Categoria" [toggleable]="false">
+                        {{item.categoria}}
+                    </p-fieldset>
+                </div>
+                <div class=" p-col-12 p-md-6">
+                    <p-fieldset legend="Situacao" [toggleable]="false">
+                        {{item.situacao}}
+                    </p-fieldset>
+                </div>
+                <div class=" p-col-12">
+                    <p-fieldset legend="Descricao" [toggleable]="false">
+                        {{item.descricao}}
+                    </p-fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-grid">
+        <div class="p-col-12">
+            <p-pickList [source]="itensUsuario" [target]="itensOfertados" sourceHeader="Seus itens" targetHeader="Oferta" [responsive]="true" filterBy="categoria" dragdrop="true" sourceFilterPlaceholder="Search by categoria" targetFilterPlaceholder="Search by categoria"
+                [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                <ng-template let-item pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <img src="data:image/png;base64,{{item.foto}}" style="display:inline-block;margin:2px 0 2px 2px" width="48">
+                        <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{item.nome}} - {{item.categoria}} - {{item.usuario}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+        <div class="p-col-12">
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" (click)="displayModal=false" label="Ofertar" (click)="ofertar()"></button>
+                <button type="button" pButton icon="pi pi-times" (click)="displayModal=false" label="Cancelar" class="ui-button-secondary" (click)="disposeModalDialog()"></button>
+            </p-footer>
+        </div>
+    </div>
+</p-dialog>
+<p-carousel *ngIf="itensCat1.length" [value]="itensCat1" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions" [style]="{'height':'400px', 'margin-bottom':'3em'}">
+    <p-header>
+        <h2>Colecionável</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" (click)="exibirItemDetalhado(item.id)" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" pull-right></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel *ngIf="itensCat2.length" [value]="itensCat2" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Edição Especial</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel *ngIf="itensCat3.length" [value]="itensCat3" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Antiguidade</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel *ngIf="itensCat4.length" [value]="itensCat4" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Artesanal</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+<p-carousel *ngIf="itensCat5.length" [value]="itensCat5" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Memorabilia</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel *ngIf="itensCat6.length" [value]="itensCat6" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Item Autografado</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+
+<p-carousel *ngIf="itensCat7.length" [value]="itensCat7" styleClass="custom-carousel" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+    <p-header>
+        <h2>Outro</h2>
+    </p-header>
+    <ng-template let-item pTemplate="item">
+        <div class="item-details">
+            <div class="p-grid p-nogutter">
+                <div class="p-col-12">
+                    <img src="data:image/png;base64,{{item.foto}}" width="200px" />
+                </div>
+                <div class="p-col-12 item-data">
+                    <div class="item-title">{{item.nome}}</div>
+                    <div class="item-subtitle">{{item.descricao}} | {{item.situacao}}
+                    </div>
+                    <div class="item-buttons button-card">
+                        <button pButton type="button" class="ui-button-secondary" icon="ui-icon-more-horiz" label="Detalhes" (click)="exibirItemDetalhado(item.id)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>
+<div class="button-bar button-mais-itens">
+    <button pButton type="button" label="Mais itens" class="ui-button-raised"></button>
+</div>

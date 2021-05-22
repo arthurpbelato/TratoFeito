@@ -1,0 +1,14 @@
+.button-card {
+    height: 1px;
+    margin: 0.5em 3em 3em 3em
+}
+
+.button-mais-itens {
+    margin-top: 3em;
+    text-align: center;
+}
+
+.modal-dialog {
+    width: auto !important;
+    height: 100% !important;
+}

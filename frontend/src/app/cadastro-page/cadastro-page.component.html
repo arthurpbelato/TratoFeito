@@ -1,0 +1,28 @@
+<div class="card cad-card shadow-box ui-shadow-3">
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+        <h1><strong>Cadastro</strong></h1>
+        <div class="ui-fluid">
+            <div class="p-field">
+                <label for="nome">Nome</label>
+                <input formControlName="nome" id="nome" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="email">Email</label>
+                <input formControlName="email" id="email" type="text" pInputText>
+            </div>
+            <div class="p-field">
+                <label for="cpf">CPF</label>
+                <p-inputMask formControlName="cpf" mask="999.999.999-99" [unmask]=true></p-inputMask>
+            </div>
+            <div clp-dialogass="p-field">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <p-calendar formControlName="dataNascimento" [style]="{'margin-bottom': '33px'}"></p-calendar>
+            </div>
+        </div>
+
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" class="ui-button-success" label="Salvar"
+                [disabled]="form.invalid || submit"></button>
+        </p-footer>
+    </form>
+</div>

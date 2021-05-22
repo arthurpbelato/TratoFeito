@@ -3,8 +3,12 @@ package com.colatina.turmaformacao.tratofeito.service.servico;
 import com.colatina.turmaformacao.tratofeito.service.dominio.Item;
 import com.colatina.turmaformacao.tratofeito.service.repositorio.ItemRepositorio;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoDTO;
+import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemDetalhadoListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.dto.ItemListagemDTO;
 import com.colatina.turmaformacao.tratofeito.service.servico.exception.RegraNegocioException;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemDetalhadoListagemMapper;
+import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemDetalhadoMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemListagemMapper;
 import com.colatina.turmaformacao.tratofeito.service.servico.mapper.ItemMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,8 @@ public class ItemServico {
     private final ItemRepositorio itemRepositorio;
     private final ItemMapper itemMapper;
     private final ItemListagemMapper itemListagemMapper;
+    private final ItemDetalhadoMapper itemDetalhadoMapper;
+    private final ItemDetalhadoListagemMapper itemDetalhadoListagemMapper;
 
     private Item getItem(Long id){
         return itemRepositorio.findById(id).orElseThrow(() ->
@@ -64,4 +70,27 @@ public class ItemServico {
         return itemRepositorio.saveAll(lista);
     }
 
+    public ItemDetalhadoDTO getItemDetalhadoDTO(Long id){
+        return itemDetalhadoMapper.toDto(getItem(id));
+    }
+
+    public List<ItemDetalhadoListagemDTO> listarItemDetalhado(){
+        List<Item> itemList = itemRepositorio.findAll();
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
+
+    public List<ItemDetalhadoListagemDTO> listarItemDetalhadoUsuario(Long id){
+        List<Item> itemList = itemRepositorio.findAllByUsuario(id);
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
+
+    public List<ItemDetalhadoListagemDTO> listarItemDetalhadoExceptUsuario(Long id){
+        List<Item> itemList = itemRepositorio.findAllExceptUsuario(id);
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
+
+    public List<ItemDetalhadoListagemDTO> listarPorCategoriaExcetoUsuario(Long categoriaId, Long usuarioId) {
+        List<Item> itemList = itemRepositorio.findAllByCategoriaExceptUsuarioLogado(categoriaId, usuarioId);
+        return itemDetalhadoListagemMapper.toDto(itemList);
+    }
 }
