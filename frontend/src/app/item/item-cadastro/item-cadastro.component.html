@@ -1,0 +1,43 @@
+<h3>Novo Item</h3>
+<br>
+<button pButton label="Criar Item" type="button" class="ui-button-success ui-button-raised" (click)="showDialog()"></button>
+<br>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-dialog [header]="!this.isEditing? 'Cadastro de Item' : 'Atualizar Item'" [(visible)]="display" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true" [closable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false" (onHide)="fecharModal()">
+        <div class="ui-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-6">
+                <label for="nome">Nome</label>
+                <input pInputText id="nome" type="text" formControlName="nome">
+            </div>
+            <br>
+            <div class="p-field p-col-12">
+                <label for="descricao">Descrição</label>
+                <textarea pInputTextarea id="descricao" type="text" rows="4" formControlName="descricao"></textarea>
+            </div>
+            <br>
+            <div class="p-field p-col-12">
+                <label for="imagem-item">Foto</label>
+                <br>
+                <small>{{fileName}}</small>
+                <input #myImageInput hidden id="imagem-item" type="file" (change)="onFileChanged($event)" accept=".jpeg" #fileInput>
+            </div>
+            <button pButton type="button" label="Selecione uma Imagem" (click)="fileInput.click()"></button>
+            <br><br>
+            <div class="p-field-checkbox">
+                <label for="disponibilidade">
+                    <input id="disponibilidade" type="checkbox" formControlName="disponibilidade" checked="false">Disponibilidade
+                </label>
+            </div>
+            <br>
+            <div class="p-field p-col-12 p-md-3">
+                <label for="id-categoria">Categoria</label>
+                <p-dropdown id="id-categoria" [options]="categorias" placeholder="Selecione" formControlName="idCategoria"></p-dropdown>
+            </div>
+            <br>
+        </div>
+        <p-footer>
+            <button pButton type="submit" [label]="!this.isEditing? 'Criar Item' : 'Atualizar'" [disabled]="form.invalid || submit"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="fecharModal()" label="Fechar" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+</form>

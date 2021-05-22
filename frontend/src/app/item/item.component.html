@@ -1,0 +1,4 @@
+<h2>Itens</h2>
+<br>
+<app-item-cadastro (itemListagemOutput)="buscarTodos()"></app-item-cadastro>
+<app-item-listagem (itemAlterarOutput)="alterarHandler($event)" (itemDeletarOutput)="buscarTodos()" [itens]="itensCurr"></app-item-listagem>
